@@ -3,7 +3,7 @@ import "whatwg-fetch"
 
 export default {
 	async getList(page, tag) {
-		var response = await fetch(`https://cnodejs.org/api/v1/topics?page=${page}&limit=30&tab=${tag}`, {
+		var response = await fetch(`https://cnodejs.org/api/v1/topics?page=${page}&limit=20&tab=${tag}`, {
 			//credentials: "include",
 			mode: "cors",
 			headers: {
@@ -12,7 +12,7 @@ export default {
 		}).catch((error) => {
 			console.log(error)
 		})
-		
+
 		return await response.json().catch((error) => {
 			console.log(error)
 		})
@@ -27,7 +27,25 @@ export default {
 		}).catch((error) => {
 			console.log(error)
 		})
-		
+
+		return await response.json().catch((error) => {
+			console.log(error)
+		})
+	},
+	async like(id, token) {
+		var response = await fetch(`https://cnodejs.org/api/v1/reply/${id}/ups`, {
+			//credentials: "include",
+			method: "POST",
+			mode: "cors",
+			headers: {
+				"X-Requested-With": "XMLHttpRequest",
+				"Content-Type": "application/x-www-form-urlencoded"
+			},
+			body: `accesstoken=${token}`
+		}).catch((error) => {
+			console.log(error)
+		})
+
 		return await response.json().catch((error) => {
 			console.log(error)
 		})

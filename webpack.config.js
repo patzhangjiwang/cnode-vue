@@ -25,7 +25,7 @@ module.exports = {
 				loader: ExtractTextPlugin.extract("style-loader", "css!postcss")
 			},
 			{
-				test: /\.(png|jpg|gif)$/,
+				test: /\.(png|jpg|gif|ttf|svg|ico)$/,
 				loader: "url-loader",
 				query: {
 					name: "[hash].[ext]",
@@ -49,5 +49,11 @@ module.exports = {
 	// externals: {
 	// 	Vue: "Vue"
 	// },
+	devServer: {
+		historyApiFallback: true,
+		hot: true,
+		inline: true,
+		progress: true,
+	},
 	devtool: "eval-source-map"
 }
