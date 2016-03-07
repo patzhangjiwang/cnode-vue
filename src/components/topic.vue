@@ -63,6 +63,18 @@
 				}
 			}
 		},
+		route: {
+			activate(transition) {
+				// 隐藏导航栏
+				this.$dispatch("hideNav")
+
+				transition.next()
+			},
+			deactivate() {
+				// 显示导航栏
+				this.$dispatch("showNav")
+			}
+		},
 		created() {
 			this.getTopic()
 		},

@@ -6,7 +6,8 @@ import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
 var router = new VueRouter({
-	history: true
+	history: true,
+	saveScrollPosition: true
 })
 
 router.map({

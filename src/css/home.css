@@ -47,8 +47,9 @@ header {
 .container {
 	/*min-height: 5rem;*/
 	padding-bottom: 0.7rem;
-	margin-top: 0.7rem;
+	/* margin-top: 0.7rem; */
 	position: relative;
+	transition: all 0.25s;
 }
 
 .container ul {

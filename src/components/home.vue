@@ -7,12 +7,12 @@
 		</h2>
 		<a href="https://github.com/ihanyang/cnode-vue" class="github-icon" target="_blank"></a>
 	</header>
-	<div class="container">
+	<div class="container" :style="{transform: transform}">
 		<!-- <div class="loading" v-if="! loading"></div> -->
-		<div class="loading-wrap loading-list" v-if="! loading">
+		<div class="loading-wrap loading-list">
 			<div class="loading">正在加载 客官骚等哈~~</div>
 		</div>
-		<ul v-if="loading">
+		<ul>
 			<li class="item" v-for="item in list">
 				<!-- <div class="item-cate" :style="{color: cates[item.tab] ? cates[item.tab].color : 'teal'}" v-text="cates[item.tab] ? cates[item.tab].text : '暂无'"></div>
 				<a class="item-detail" v-link="{path: '/topic/' + item.id}">
@@ -74,27 +74,6 @@
 			<div class="loading">正在加载 客官骚等哈~~</div>
 		</div>
 	</div>
-	<nav class="nav">
-		<div class="nav-btn">
-			<i class="iconfont">&#xe62d;</i>
-			首页
-		</div>
-		<a class="nav-btn" href="#">
-			<i class="iconfont">&#xe640;</i>
-			消息
-		</a>
-		<div class="nav-btn add-btn">
-			<i class="iconfont">&#xe6b9;</i>
-		</div>
-		<a class="nav-btn" href="#">
-			<i class="iconfont">&#xe6ac;</i>
-			发现
-		</a>
-		<a class="nav-btn" href="#">
-			<i class="iconfont">&#xe6b8;</i>
-			我
-		</a>
-	</nav>
 	<div class="pop" :style="{height: height}" v-if="pop">
 		<ul class="tag-list">
 			<li v-for="tag in tags" v-text="tag"></li>
@@ -116,6 +95,7 @@
 				page: 1,
 				scrollTop: false,
 				locked: false,
+				loading: true,
 				pop: false,
 				list: [],
 				cates: {
@@ -136,7 +116,8 @@
 						color: "#E67E22"
 					}
 				},
-				tags: ["全部", "精华", "分享", "问答", "招聘"]
+				tags: ["全部", "精华", "分享", "问答", "招聘"],
+				transform: "translateY(0)"
 			}
 		},
 		route: {
@@ -148,7 +129,7 @@
 			this.getList()
 		},
 		computed: {
-			loading() {
+			loadingssssss() {
 				return !! this.list.length
 			},
 			height() {
@@ -176,6 +157,17 @@
 				return str
 			}
 		},
+		events: {
+			refresh() {
+				if (this.transform === "translateY(-97px)") {
+					this.transform = "translateY(0)"
+
+					//this.loading = true
+
+					this.getList()
+				}
+			}
+		},
 		methods: {
 			async getList() {
 				let data = await api.getList(this.page, this.tag)
@@ -183,6 +175,9 @@
 				this.list = this.list.concat(data.data)
 
 				this.locked = false
+				this.loading = false
+
+				this.transform = "translateY(-97px)"
 			},
 			selectTag() {
 				this.pop = true
