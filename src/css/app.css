@@ -85,7 +85,8 @@ h2, h4 {
 }
 
 .loading-list {
-	margin-top: 1.5rem;
+	padding-top: 1.2rem;
+	/* margin-bottom: 0; */
 }
 .loading {
 	/*width: 0.5rem;

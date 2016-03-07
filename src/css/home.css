@@ -50,10 +50,11 @@ header {
 	/* margin-top: 0.7rem; */
 	position: relative;
 	transition: all 0.25s;
+	background-color: #F2F2F2;
 }
 
 .container ul {
-	background-color: #F2F2F2;
+
 }
 .item {
 	padding-top: 0.3rem;
