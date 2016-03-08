@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<router-view></router-view>
+		<router-view :user="user"></router-view>
 		<nav class="nav" v-if="showNav">
 			<div class="nav-btn" @click="refresh">
 				<i class="iconfont">&#xe62d;</i>
@@ -29,7 +29,8 @@
 	export default {
 		data() {
 			return {
-				showNav: true
+				showNav: true,
+				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 			}
 		},
 		created() {
@@ -55,11 +56,11 @@
 				this.$route.path === "/" ? this.$broadcast("refresh") : this.$route.router.go("/")
 			},
 			loginState() {
-				let info = localStorage.getItem("info")
+				let info = localStorage.getItem("user")
 
 				return {
 					state: !! info,
-					data: JSON.parse(localStorage.getItem("info"))
+					data: JSON.parse(localStorage.getItem("user"))
 				}
 			},
 			sureDirection(path, param) {
@@ -86,7 +87,7 @@
 			goUser() {
 				//let username = JSON.parse(localStorage.getItem("info")).username
 
-				this.sureDirection("/user/", "username")
+				this.sureDirection("/profile/", "loginname")
 			}
 		}
 	}

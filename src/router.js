@@ -2,6 +2,9 @@ import Vue from "vue"
 import Home from "./components/home.vue"
 import Topic from "./components/topic.vue"
 import Login from "./components/login.vue"
+import Message from "./components/message.vue"
+import Post from "./components/post.vue"
+import Profile from "./components/profile.vue"
 import VueRouter from "vue-router"
 
 Vue.use(VueRouter)
@@ -20,6 +23,15 @@ router.map({
 	},
 	"/login": {
 		component: Login
+	},
+	"/message": {
+		component: Message
+	},
+	"/post": {
+		component: Post
+	},
+	"/profile/:username": {
+		component: Profile
 	}
 })
 

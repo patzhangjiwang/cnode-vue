@@ -159,7 +159,7 @@
 		},
 		events: {
 			refresh() {
-				if (this.transform === "translateY(-97px)") {
+				if (this.transform === "translateY(-1.5rem)") {
 					this.transform = "translateY(0)"
 
 					//this.loading = true
@@ -177,7 +177,7 @@
 				this.locked = false
 				this.loading = false
 
-				this.transform = "translateY(-97px)"
+				this.transform = "translateY(-1.5rem)"
 			},
 			selectTag() {
 				this.pop = true

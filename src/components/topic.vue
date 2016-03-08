@@ -34,23 +34,56 @@
 						<p class="reply-content" v-html="item.content"></p>
 						<p class="reply-ft">
 							<span v-text="item.create_at | timeFormat"></span>
-							<span class="reply-btn" v-if="loginState">回复</span>
-							<span class="like" @click="like(item.id, item)" v-text="item.ups.includes('5617694c2fb53d5b4f2329bd') ? '取消赞' : '赞'"></span>
+							<template v-if="loginState">
+								<template v-if="item.author.loginname !== user.loginname">
+									<span class="reply-btn" @click="item.id.endsWith('sss') ? item.id = item.id.substring(0, item.id.indexOf('sss')) : item.id = item.id + 'sss'">回复</span>
+									<span class="like" @click="like(item.id, item)" v-text="item.ups.includes('5617694c2fb53d5b4f2329bd') ? '取消赞' : '赞'"></span>
+								</template>
+								<template v-else>
+									<span class="del" @click="del">删除</span>
+								</template>
+							</template>
+							<template v-else>
+								<span class="like" @click="forLike">赞</span>
+							</template>
 							<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
+							<div class="reply-box" v-if="item.aaa">
+								<div class="reply-edit-content-wrap">
+									<img :src="avatar">
+									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent">
+								</div>
+								<div class="reply-edit-btn-wrap">
+									<span class="reply-edit-btn">取消</span>
+									<span class="reply-edit-btn" @click="reply(item.author.loginname, item.id)">评论</span>
+								</div>
+							</div>
 						</p>
 					</div>
 				</li>
 			</ul>
+			<div class="reply-box reply-box-ft" v-if="loginState">
+				<div class="reply-edit-content-wrap">
+					<img :src="avatar">
+					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContentFt">
+				</div>
+				<div class="reply-edit-btn-wrap">
+					<span class="reply-edit-btn">取消</span>
+					<span class="reply-edit-btn" @click="reply">评论</span>
+				</div>
+			</div>
 			<!-- <div class="reply-more" @click="loadMoreReply">显示更多评论</div> -->
 		</div>
 	</div>
+	<modal :show.sync="showLoginModal"></modal>
 </template>
 
 <script>
 	import api from "../api"
 	import filters from "../filters"
+	import modal from "./modal.vue"
 
 	export default {
+		props: ["user"],
 		data() {
 			return {
 				loading: true,
@@ -60,7 +93,10 @@
 						avatar_url: ""
 					},
 					replies: []
-				}
+				},
+				replyContent: "",
+				replyContentFt: "",
+				showLoginModal: false
 			}
 		},
 		route: {
@@ -75,12 +111,18 @@
 				this.$dispatch("showNav")
 			}
 		},
+		components: {
+			modal
+		},
 		created() {
 			this.getTopic()
 		},
 		computed: {
 			loginState() {
-				return !! localStorage.getItem("info")
+				return !! localStorage.getItem("user")
+			},
+			avatar() {
+				return this.user.avatar_url //JSON.parse(localStorage.getItem("user")).avatar_url
 			}
 		},
 		filters: {
@@ -101,21 +143,41 @@
 				this.loading = false
 			},
 			async like(id, item) {
-				let token = JSON.parse(localStorage.getItem("info")).token
+				let token = JSON.parse(localStorage.getItem("user")).token
 				let data = await api.like(id, token)
 
 				if (data.success && data.action === "up") {
-					item.ups.push(JSON.parse(localStorage.getItem("info")).id)
+					item.ups.push(JSON.parse(localStorage.getItem("user")).id)
 
 					return
 				}
 
 				if (data.success && data.action === "down") {
-					item.ups.$remove(JSON.parse(localStorage.getItem("info")).id)
+					item.ups.$remove(JSON.parse(localStorage.getItem("user")).id)
 
 					return
 				}
 
+			},
+			async reply(name, replyId) {
+				let replyName = "",
+					replyContent = this.replyContentFt
+
+				if (typeof name === "string") {
+					replyName = "@name"
+					replyContent = this.replyContent
+				}
+
+				let content = `${replyName}${replyContent} <br> 来自宇宙超级无敌帅的南风小神仙~~`
+
+				let token = JSON.parse(localStorage.getItem("user")).token
+				let data = await api.reply(token, this.$route.params.topicId, content, replyId)
+			},
+			forLike() {
+				this.showLoginModal = true
+			},
+			del() {
+				alert("删除API 木有开放~~")
 			}
 		}
 	}
