@@ -64,9 +64,9 @@
 			<div class="reply-box reply-box-ft" v-if="loginState">
 				<div class="reply-edit-content-wrap">
 					<img :src="avatar">
-					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContentFt">
+					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContentFt" @click="aaa = true">
 				</div>
-				<div class="reply-edit-btn-wrap">
+				<div class="reply-edit-btn-wrap" v-if="aaa">
 					<span class="reply-edit-btn">取消</span>
 					<span class="reply-edit-btn" @click="reply">评论</span>
 				</div>
@@ -96,7 +96,8 @@
 				},
 				replyContent: "",
 				replyContentFt: "",
-				showLoginModal: false
+				showLoginModal: false,
+				aaa: false
 			}
 		},
 		route: {
@@ -171,6 +172,22 @@
 				let content = `${replyName}${replyContent} <br> 来自宇宙超级无敌帅的南风小神仙~~`
 
 				let token = JSON.parse(localStorage.getItem("user")).token
+
+				this.topic.replies.push({
+					author: {
+						loginname: this.user.loginname,
+						avatar_url: this.user.avatar_url
+					},
+					create_at: + new Date,
+					content: `<div class="markdown-text">${this.replyContentFt}</div>`,
+					ups: []
+				})
+
+
+				this.replyContentFt = ""
+				this.aaa = false
+
+				//return
 				let data = await api.reply(token, this.$route.params.topicId, content, replyId)
 			},
 			forLike() {

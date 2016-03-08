@@ -1,7 +1,8 @@
 <style src="../css/home.css"></style>
 
 <template>
-	<header>
+	<div>
+		<header>
 		<h2 class="title">
 			<span class="select-bar" v-text="title" @click="selectTag"></span>
 		</h2>
@@ -80,6 +81,7 @@
 		</ul>
 	</div>
 	<div class="back-top" @click="backTop" v-if="scrollTop"></div>
+	</div>
 </template>
 
 <script>

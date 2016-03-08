@@ -119,11 +119,44 @@ h2, h4 {
 }
 .modal-container {
 	width: 100%;
-	min-height: 200px;
+	padding-bottom: 0.8rem;
 	margin: auto;
 	background-color: #FFF;
+	transition: all 0.3s ease;
 }
 .modal-enter, .modal-leave {
 	opacity: 0;
+}
+.modal-enter, .modal-leave, .modal-enter .modal-container, .modal-leave .modal-container {
 	transform: scale(1.1);
+}
+
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	color: #9D9E9F;
+	font-size: 0.25rem;
+	border-bottom: 1px solid #EDEEEF;
+}
+.modal-header h4 {
+	flex: 1;
+	padding-left: 0.25rem;
+	line-height: 0.8rem;
+}
+.modal-header a {
+	width: 0.8rem;
+	color: #9D9E9F;
+	text-align: center;
+	line-height: 0.8rem;
+}
+
+.modal-login-btn {
+	display: block;
+	width: 3rem;
+	margin: 0.4rem auto;
+	color: #FFF;
+	text-align: center;
+	font-size: 0.25rem;
+	line-height: 0.7rem;
+	background-color: #FF8200;
 }
