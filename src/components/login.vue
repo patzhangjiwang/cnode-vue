@@ -5,7 +5,7 @@
 		<h2 class="title">登录</h2>
 	</header>
 	<div class="login-box">
-		<input type="text" placeholder="Access Token" required v-model="token" v-focus="token">
+		<input type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
 		<a class="login-btn" href="javascript:;" @click="loginValidate">登录</a>
 	</div>
 </template>
@@ -32,7 +32,11 @@
 				let path = this.$route.query.redirect
 
 				if (data.success) {
+					// 记录 token
 					data.token = this.token
+
+					// 自定义小尾巴
+					data.tail = "来自花见花开 人见人爱的南风~~"
 
 					path === "/profile/" && (path = path + data.loginname)
 

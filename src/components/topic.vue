@@ -2,7 +2,9 @@
 
 <template>
 	<header class="topic-hd">
-		<a class="back-btn" v-link="{path: '/'}"></a>
+		<a class="back-btn-wrap" v-link="{path: '/'}">
+			<i class="back-btn"></i>
+		</a>
 		<h2 class="title">帖子正文</h2>
 		<div class="login-btn"></div>
 	</header>
@@ -38,6 +40,7 @@
 								<template v-if="item.author.loginname !== user.loginname">
 									<span class="reply-btn" @click="item.id.endsWith('sss') ? item.id = item.id.substring(0, item.id.indexOf('sss')) : item.id = item.id + 'sss'">回复</span>
 									<span class="like" @click="like(item.id, item)" v-text="item.ups.includes('5617694c2fb53d5b4f2329bd') ? '取消赞' : '赞'"></span>
+									<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 								</template>
 								<template v-else>
 									<span class="del" @click="del">删除</span>
@@ -45,9 +48,9 @@
 							</template>
 							<template v-else>
 								<span class="like" @click="forLike">赞</span>
+								<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 							</template>
-							<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
-							<div class="reply-box" v-if="item.aaa">
+							<div class="reply-box" v-if="item.replyState">
 								<div class="reply-edit-content-wrap">
 									<img :src="avatar">
 									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent">
@@ -63,11 +66,11 @@
 			</ul>
 			<div class="reply-box reply-box-ft" v-if="loginState">
 				<div class="reply-edit-content-wrap">
-					<img :src="avatar">
-					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContentFt" @click="aaa = true">
+					<img :src="user.avatar_url">
+					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContentFt" @click="replyState = true" @keydown.enter="reply">
 				</div>
-				<div class="reply-edit-btn-wrap" v-if="aaa">
-					<span class="reply-edit-btn">取消</span>
+				<div class="reply-edit-btn-wrap" v-if="replyState">
+					<span class="reply-edit-btn" @click="replyState = false">取消</span>
 					<span class="reply-edit-btn" @click="reply">评论</span>
 				</div>
 			</div>
@@ -83,7 +86,7 @@
 	import modal from "./modal.vue"
 
 	export default {
-		props: ["user"],
+		//props: ["user"],
 		data() {
 			return {
 				loading: true,
@@ -94,10 +97,11 @@
 					},
 					replies: []
 				},
+				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
 				replyContent: "",
 				replyContentFt: "",
 				showLoginModal: false,
-				aaa: false
+				replyState: false
 			}
 		},
 		route: {
@@ -169,7 +173,7 @@
 					replyContent = this.replyContent
 				}
 
-				let content = `${replyName}${replyContent} <br> 来自宇宙超级无敌帅的南风小神仙~~`
+				let content = `${replyName}${replyContent} <br> ${this.user.tail}`
 
 				let token = JSON.parse(localStorage.getItem("user")).token
 
@@ -178,14 +182,14 @@
 						loginname: this.user.loginname,
 						avatar_url: this.user.avatar_url
 					},
-					create_at: + new Date,
-					content: `<div class="markdown-text">${this.replyContentFt}</div>`,
+					create_at: filters.ISOTimeFormat(+ new Date),
+					content: `<div class="markdown-text">${this.replyContentFt} <br> ${this.user.tail}</div>`,
 					ups: []
 				})
 
 
 				this.replyContentFt = ""
-				this.aaa = false
+				this.replyState = false
 
 				//return
 				let data = await api.reply(token, this.$route.params.topicId, content, replyId)
@@ -194,7 +198,7 @@
 				this.showLoginModal = true
 			},
 			del() {
-				alert("删除API 木有开放~~")
+				alert("点了也木有用 还没做~~")
 			}
 		}
 	}

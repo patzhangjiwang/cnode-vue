@@ -1,12 +1,17 @@
+.back-btn-wrap {
+	display: flex;
+	width: 0.7rem;
+	height: 0.7rem;
+	position: absolute;
+}
+
 .back-btn {
 	width: 0.24rem;
 	height: 0.24rem;
-	margin: auto 0 auto 0.3rem;
-	position: absolute;
-	top: 50%;
+	margin: auto;
 	border-bottom: 1px solid #333;
 	border-left: 1px solid #333;
-	transform: rotate(45deg) translateY(-50%);
+	transform: rotate(45deg);
 }
 
 .topic-loading {
