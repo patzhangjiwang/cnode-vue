@@ -38,7 +38,7 @@
 							<span v-text="item.create_at | timeFormat"></span>
 							<template v-if="loginState">
 								<template v-if="item.author.loginname !== user.loginname">
-									<span class="reply-btn" @click="item.id.endsWith('sss') ? item.id = item.id.substring(0, item.id.indexOf('sss')) : item.id = item.id + 'sss'">回复</span>
+									<span class="reply-btn" @click="subReply(item)">回复</span>
 									<span class="like" @click="like(item.id, item)" v-text="item.ups.includes('5617694c2fb53d5b4f2329bd') ? '取消赞' : '赞'"></span>
 									<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 								</template>
@@ -50,14 +50,14 @@
 								<span class="like" @click="forLike">赞</span>
 								<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 							</template>
-							<div class="reply-box" v-if="item.replyState">
+							<div class="reply-box" v-if="item.reply">
 								<div class="reply-edit-content-wrap">
 									<img :src="avatar">
-									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent">
+									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="item.replyContent" @keydown.enter="aaa(item)">
 								</div>
 								<div class="reply-edit-btn-wrap">
-									<span class="reply-edit-btn">取消</span>
-									<span class="reply-edit-btn" @click="reply(item.author.loginname, item.id)">评论</span>
+									<span class="reply-edit-btn" @click="item.reply = false">取消</span>
+									<span class="reply-edit-btn" @click="aaa(item)">评论</span>
 								</div>
 							</div>
 						</p>
@@ -84,6 +84,7 @@
 	import api from "../api"
 	import filters from "../filters"
 	import modal from "./modal.vue"
+	import Vue from "vue"
 
 	export default {
 		//props: ["user"],
@@ -191,7 +192,32 @@
 				this.replyContentFt = ""
 				this.replyState = false
 
-				//return
+				return
+				let data = await api.reply(token, this.$route.params.topicId, content, replyId)
+			},
+			async aaa(item) {
+				let replyName = `<a href="/profile/${item.author.loginname}">@${item.author.loginname}</a>`,
+					replyContent = item.replyContent
+
+				let content = `${replyName} ${replyContent} <br> <br> ${this.user.tail}`
+
+				let token = this.user.token
+
+				this.topic.replies.push({
+					author: {
+						loginname: this.user.loginname,
+						avatar_url: this.user.avatar_url
+					},
+					create_at: filters.ISOTimeFormat(+ new Date),
+					content: `<div class="markdown-text">${content}</div>`,
+					ups: []
+				})
+
+
+				item.replyContent = ""
+				item.reply = false
+
+				return
 				let data = await api.reply(token, this.$route.params.topicId, content, replyId)
 			},
 			forLike() {
@@ -199,6 +225,10 @@
 			},
 			del() {
 				alert("点了也木有用 还没做~~")
+			},
+			subReply(item) {
+				Vue.set(item, "reply", true)
+				Vue.set(item, "replyContent", "")
 			}
 		}
 	}
