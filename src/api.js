@@ -86,5 +86,20 @@ export default {
 		return await response.json().catch((error) => {
 			console.log(error)
 		})
-	}
+	},
+	async getProfile(nickname) {
+		var response = await fetch(`https://cnodejs.org/api/v1/user/${nickname}`, {
+			//credentials: "include",
+			mode: "cors",
+			headers: {
+				"X-Requested-With": "XMLHttpRequest"
+			}
+		}).catch((error) => {
+			console.log(error)
+		})
+
+		return await response.json().catch((error) => {
+			console.log(error)
+		})
+	},
 }

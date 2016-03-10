@@ -6,21 +6,25 @@
 				<i class="iconfont">&#xe62d;</i>
 				首页
 			</div>
-			<div class="nav-btn" @click="goMessage">
+			<a class="nav-btn" v-link="{path: '/message'}">
 				<i class="iconfont">&#xe640;</i>
 				消息
-			</div>
-			<div class="nav-btn add-btn" @click="goPost">
+			</a>
+			<a class="nav-btn add-btn" v-link="{path: 'post'}">
 				<i class="iconfont">&#xe6b9;</i>
-			</div>
+			</a>
 			<div class="nav-btn">
 				<i class="iconfont">&#xe6ac;</i>
 				发现
 			</div>
-			<div class="nav-btn" @click="goUser">
+			<!-- <div class="nav-btn" @click="goUser">
 				<i class="iconfont">&#xe6b8;</i>
 				我
-			</div>
+			</div> -->
+			<a class="nav-btn" v-link="{path: '/profile/' + user.loginname}">
+				<i class="iconfont">&#xe6b8;</i>
+				我
+			</a>
 		</nav>
 	</div>
 </template>
@@ -53,6 +57,7 @@
 		},
 		methods: {
 			refresh() {
+				//this.$route.path === "/" && alert(5555)
 				this.$route.path === "/" ? this.$broadcast("refresh") : this.$route.router.go("/")
 			},
 			loginState() {

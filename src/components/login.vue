@@ -48,7 +48,7 @@
 		},
 		directives: {
 			focus(value) {
-				if (! value) {
+				if (value) {
 					return
 				}
 

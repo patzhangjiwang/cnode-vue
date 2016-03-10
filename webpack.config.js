@@ -8,6 +8,7 @@ module.exports = {
 		path: path.resolve(__dirname, "./dist"),
 		filename: "app.js",
 		publicPath: "/dist/"
+		//chunkFilename: "[chunkhash].js"
 	},
 	module: {
 		loaders: [
@@ -46,9 +47,9 @@ module.exports = {
 	plugins: [
 		new ExtractTextPlugin("app.css")
 	],
-	// externals: {
-	// 	Vue: "Vue"
-	// },
+	externals: {
+		Vue: "Vue"
+	},
 	devServer: {
 		historyApiFallback: true,
 		hot: true,

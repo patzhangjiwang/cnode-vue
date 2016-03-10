@@ -50,14 +50,14 @@
 								<span class="like" @click="forLike">赞</span>
 								<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 							</template>
-							<div class="reply-box" v-if="item.reply">
+							<div class="reply-box" v-if="item.replyState">
 								<div class="reply-edit-content-wrap">
 									<img :src="avatar">
-									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="item.replyContent" @keydown.enter="aaa(item)">
+									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="item.replyContent" @keydown.enter="toSubReply(item)">
 								</div>
 								<div class="reply-edit-btn-wrap">
-									<span class="reply-edit-btn" @click="item.reply = false">取消</span>
-									<span class="reply-edit-btn" @click="aaa(item)">评论</span>
+									<span class="reply-edit-btn" @click="item.replyState = false">取消</span>
+									<span class="reply-edit-btn" @click="toSubReply(item)">评论</span>
 								</div>
 							</div>
 						</p>
@@ -67,11 +67,11 @@
 			<div class="reply-box reply-box-ft" v-if="loginState">
 				<div class="reply-edit-content-wrap">
 					<img :src="user.avatar_url">
-					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContentFt" @click="replyState = true" @keydown.enter="reply">
+					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent" @click="replyState = true" @keydown.enter="toReply">
 				</div>
 				<div class="reply-edit-btn-wrap" v-if="replyState">
 					<span class="reply-edit-btn" @click="replyState = false">取消</span>
-					<span class="reply-edit-btn" @click="reply">评论</span>
+					<span class="reply-edit-btn" @click="toReply">评论</span>
 				</div>
 			</div>
 			<!-- <div class="reply-more" @click="loadMoreReply">显示更多评论</div> -->
@@ -100,7 +100,7 @@
 				},
 				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
 				replyContent: "",
-				replyContentFt: "",
+				//replyContentFt: "",
 				showLoginModal: false,
 				replyState: false
 			}
@@ -165,44 +165,22 @@
 				}
 
 			},
-			async reply(name, replyId) {
-				let replyName = "",
-					replyContent = this.replyContentFt
+			toReply() {
+				let content = `${this.replyContent} <br> <br> ${this.user.tail}`
 
-				if (typeof name === "string") {
-					replyName = "@name"
-					replyContent = this.replyContent
-				}
-
-				let content = `${replyName}${replyContent} <br> ${this.user.tail}`
-
-				let token = JSON.parse(localStorage.getItem("user")).token
-
-				this.topic.replies.push({
-					author: {
-						loginname: this.user.loginname,
-						avatar_url: this.user.avatar_url
-					},
-					create_at: filters.ISOTimeFormat(+ new Date),
-					content: `<div class="markdown-text">${this.replyContentFt} <br> ${this.user.tail}</div>`,
-					ups: []
-				})
-
-
-				this.replyContentFt = ""
-				this.replyState = false
-
-				return
-				let data = await api.reply(token, this.$route.params.topicId, content, replyId)
+				this.reply(content)
 			},
-			async aaa(item) {
+			toSubReply(item) {
 				let replyName = `<a href="/profile/${item.author.loginname}">@${item.author.loginname}</a>`,
 					replyContent = item.replyContent
 
-				let content = `${replyName} ${replyContent} <br> <br> ${this.user.tail}`
+				let content = `${replyName} ${item.replyContent} <br> <br> ${this.user.tail}`
 
+				this.reply(content, item)
+			},
+			async reply(content, item) {
 				let token = this.user.token
-
+				
 				this.topic.replies.push({
 					author: {
 						loginname: this.user.loginname,
@@ -213,12 +191,19 @@
 					ups: []
 				})
 
+				if (! item) {
+					this.replyContent = ""
+					this.replyState = false
+
+					let data = await api.reply(token, this.$route.params.topicId, content)
+
+					return
+				}
 
 				item.replyContent = ""
-				item.reply = false
+				item.replyState = false
 
-				return
-				let data = await api.reply(token, this.$route.params.topicId, content, replyId)
+				let data = await api.reply(token, this.$route.params.topicId, content, item.id)
 			},
 			forLike() {
 				this.showLoginModal = true
@@ -227,7 +212,7 @@
 				alert("点了也木有用 还没做~~")
 			},
 			subReply(item) {
-				Vue.set(item, "reply", true)
+				Vue.set(item, "replyState", true)
 				Vue.set(item, "replyContent", "")
 			}
 		}

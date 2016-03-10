@@ -33,6 +33,10 @@ h2, h4 {
     -moz-osx-font-smoothing: grayscale;
 }
 
+.v-link-active {
+	color: #FF8200;
+}
+
 #app {
 	width: 6.4rem;
 	margin: 0 auto;
