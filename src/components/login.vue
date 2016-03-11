@@ -1,12 +1,14 @@
 <style src="../css/login.css"></style>
 
 <template>
-	<header class="topic-hd">
-		<h2 class="title">登录</h2>
-	</header>
-	<div class="login-box">
-		<input type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
-		<a class="login-btn" href="javascript:;" @click="loginValidate">登录</a>
+	<div>
+		<header class="topic-hd">
+			<h2 class="title">登录</h2>
+		</header>
+		<div class="login-box">
+			<input type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
+			<a class="login-btn" href="javascript:;" @click="loginValidate">登录</a>
+		</div>
 	</div>
 </template>
 
@@ -41,6 +43,8 @@
 					path === "/profile/" && (path = path + data.loginname)
 
 					localStorage.setItem("user", JSON.stringify(data))
+
+					this.$dispatch("reviseTitle", data.loginname)
 
 					this.$route.router.go(path)
 				}

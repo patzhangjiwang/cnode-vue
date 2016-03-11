@@ -168,6 +168,9 @@
 
 					this.getList()
 				}
+			},
+			aaa(title) {
+				this.title = title
 			}
 		},
 		methods: {

@@ -33,7 +33,7 @@ h2, h4 {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.v-link-active {
+.selected {
 	color: #FF8200;
 }
 
@@ -64,6 +64,9 @@ h2, h4 {
 	line-height: 0.7rem;
 	border-radius: 4px;
 	background-color: #FF8200;
+}
+.find-btn {
+	color: #CCC;
 }
 
 .nav-btn i {

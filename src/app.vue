@@ -2,29 +2,29 @@
 	<div>
 		<router-view :user="user"></router-view>
 		<nav class="nav" v-if="showNav">
-			<div class="nav-btn" @click="refresh">
+			<div class="nav-btn" :class="{'selected': selectHome}" @click="refresh">
 				<i class="iconfont">&#xe62d;</i>
 				首页
 			</div>
-			<a class="nav-btn" v-link="{path: '/message'}">
+			<div class="nav-btn" :class="{'selected': selectMessage}" @click="goMessage">
 				<i class="iconfont">&#xe640;</i>
 				消息
-			</a>
-			<a class="nav-btn add-btn" v-link="{path: 'post'}">
+			</div>
+			<div class="nav-btn add-btn" @click="goPost">
 				<i class="iconfont">&#xe6b9;</i>
-			</a>
-			<div class="nav-btn">
+			</div>
+			<div class="nav-btn find-btn">
 				<i class="iconfont">&#xe6ac;</i>
 				发现
 			</div>
-			<!-- <div class="nav-btn" @click="goUser">
+			<div class="nav-btn" :class="{'selected': selectProfile}" @click="goProfile">
 				<i class="iconfont">&#xe6b8;</i>
 				我
-			</div> -->
-			<a class="nav-btn" v-link="{path: '/profile/' + user.loginname}">
+			</div>
+			<!-- <a class="nav-btn" v-link="{path: '/profile/' + user.loginname}">
 				<i class="iconfont">&#xe6b8;</i>
 				我
-			</a>
+			</a> -->
 		</nav>
 	</div>
 </template>
@@ -47,12 +47,26 @@
 			// 	id: "5617694c2fb53d5b4f2329bd"
 			// }))
 		},
+		computed: {
+			selectHome() {
+				return this.$route.path === "/"
+			},
+			selectMessage() {
+				return this.$route.path === "/message"
+			},
+			selectProfile() {
+				return this.$route.path.startsWith("/profile")
+			}
+		},
 		events: {
 			showNav() {
 				this.showNav = true
 			},
 			hideNav() {
 				this.showNav = false
+			},
+			reviseTitle(title) {
+				this.$broadcast("aaa", title)
 			}
 		},
 		methods: {
@@ -89,7 +103,7 @@
 			goPost() {
 				this.sureDirection("/post")
 			},
-			goUser() {
+			goProfile() {
 				//let username = JSON.parse(localStorage.getItem("info")).username
 
 				this.sureDirection("/profile/", "loginname")

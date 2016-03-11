@@ -56,7 +56,7 @@
 			}
 		},
 		created() {
-			this.getProfile()
+			this.user.loginname ? this.getProfile() : this.$route.router.go("/")
 		},
 		methods: {
 			async getProfile() {

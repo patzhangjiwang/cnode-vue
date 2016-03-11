@@ -72,3 +72,14 @@
 .profile-list a {
 	display: block;
 }
+
+
+.translate-transition, .translate-right-transition {
+	transition: all 10.3s;
+}
+.translate-enter, .translate-leave {
+	transform: translateX(-414px);
+}
+.translate-right-enter, .translate-right-leave {
+	transform: translateX(414px);
+}
