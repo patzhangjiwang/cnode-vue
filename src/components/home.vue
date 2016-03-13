@@ -1,18 +1,25 @@
 <style src="../css/home.css"></style>
 
 <template>
-	<div>
-		<header>
+	<!-- <div> -->
+		<!-- <header>
 		<h2 class="title">
 			<span class="select-bar" v-text="title" @click="selectTag"></span>
 		</h2>
 		<a href="https://github.com/ihanyang/cnode-vue" class="github-icon" target="_blank"></a>
-	</header>
-	<div class="container" :style="{transform: transform}">
+	</header> -->
+	<header class="header" :class="{show: show}">
+			<div class="side-btn-wrap" @click="showSlideNav">
+				<div class="side-btn"></div>
+			</div>
+			<h1 class="title" v-text="tagText"></h1>
+			<div class="post-btn"></div>
+		</header>
+	<div class="container" :class="{show: show}">
 		<!-- <div class="loading" v-if="! loading"></div> -->
-		<div class="loading-wrap loading-list">
-			<div class="loading">正在加载 客官骚等哈~~</div>
-		</div>
+		<!-- <div class="loading-wrap loading-list">
+			<div class="loading">(´・ω・｀)正在加载...</div>
+		</div> -->
 		<ul>
 			<li class="item" v-for="item in list">
 				<!-- <div class="item-cate" :style="{color: cates[item.tab] ? cates[item.tab].color : 'teal'}" v-text="cates[item.tab] ? cates[item.tab].text : '暂无'"></div>
@@ -28,10 +35,14 @@
 				<div class="item-user-bar">
 					<img class="avatar" :src="item.author.avatar_url">
 					<div class="item-detail">
-						<span class="username" :data-label="'置顶'" v-text="item.author.loginname" v-if="item.top"></span>
+						<!-- <span class="username" :data-label="'置顶'" v-text="item.author.loginname" v-if="item.top"></span>
 						<span class="username" :data-label="'精华'" v-text="item.author.loginname" v-if="item.good && ! item.top"></span>
-						<span class="username" :data-label="item.tab | textFormat" v-text="item.author.loginname" v-if="! item.good && ! item.top && item.tab"></span>
+						<span class="username" :data-label="item.tab | textFormat" v-text="item.author.loginname" v-if="! item.good && ! item.top && item.tab"></span> -->
 						<!-- <span></span> -->
+						<span class="username" v-text="item.author.loginname"></span>
+						<span class="label" v-if="item.top">置顶</span>
+						<span class="label" v-if="item.good">精华</span>
+						<span class="label" v-text="item.tab | textFormat"></span>
 						<p class="item-time" v-text="item.create_at | timeFormat"></p>
 					</div>
 				</div>
@@ -72,16 +83,17 @@
 			</li>
 		</ul>
 		<div class="loading-wrap" v-if="locked">
-			<div class="loading">正在加载 客官骚等哈~~</div>
+			<div class="loading-text">(´・ω・｀)正在加载...</div>
 		</div>
 	</div>
+	<div class="mask" v-if="show" @click="hideSlideNav"></div>
 	<div class="pop" :style="{height: height}" v-if="pop">
 		<ul class="tag-list">
-			<li v-for="tag in tags" v-text="tag"></li>
+			<li v-for="tag in tags" v-text="tag.text"></li>
 		</ul>
 	</div>
 	<div class="back-top" @click="backTop" v-if="scrollTop"></div>
-	</div>
+	<!-- </div> -->
 </template>
 
 <script>
@@ -91,14 +103,16 @@
 	export default {
 		data() {
 			return {
-				title: "泰山小霸王",
+				//title: "泰山小霸王",
 				//loading: true,
-				tag: "all",
+				tag: localStorage.getItem("tag") ? localStorage.getItem("tag") : "all",
+				tagText: localStorage.getItem("tagText") ? localStorage.getItem("tagText") : "全部",
 				page: 1,
 				scrollTop: false,
 				locked: false,
-				loading: true,
-				pop: false,
+				//loading: true,
+				//pop: false,
+				show: false,
 				list: [],
 				cates: {
 					share: {
@@ -118,8 +132,30 @@
 						color: "#E67E22"
 					}
 				},
-				tags: ["全部", "精华", "分享", "问答", "招聘"],
-				transform: "translateY(0)"
+				//tags: ["全部", "精华", "分享", "问答", "招聘"],
+				tags: [
+					{
+						tag: "all",
+						text: "全部"
+					},
+					{
+						tag: "good",
+						text: "精华"
+					},
+					{
+						tag: "share",
+						text: "分享"
+					},
+					{
+						tag: "ask",
+						text: "问答"
+					},
+					{
+						tag: "job",
+						text: "招聘"
+					}
+				],
+				//transform: "translate(0, 0.7rem)"
 			}
 		},
 		route: {
@@ -129,6 +165,8 @@
 		},
 		created() {
 			this.getList()
+
+			this.$dispatch("showSlide")
 		},
 		computed: {
 			loadingssssss() {
@@ -154,14 +192,18 @@
 						job: 4
 					}
 
-					str = this.tags[map[value]]
+				if (! value) {
+					return "暂无"
+				}
+
+				str = this.tags[map[value]].text
 
 				return str
 			}
 		},
 		events: {
 			refresh() {
-				if (this.transform === "translateY(-1.5rem)") {
+				if (this.transform === "translateY(0.7rem)") {
 					this.transform = "translateY(0)"
 
 					//this.loading = true
@@ -171,6 +213,25 @@
 			},
 			aaa(title) {
 				this.title = title
+			},
+			showSlideNav() {
+				this.show = true
+			},
+			hideSlideNav(index) {
+				this.show = false
+
+				if (typeof index !== "undefined") {
+					this.tag = this.tags[index].tag
+					this.tagText = this.tags[index].text
+
+					this.page = 1
+					this.list = []
+
+					this.getList()
+
+					localStorage.setItem("tag", this.tag)
+					localStorage.setItem("tagText", this.tagText)
+				}
 			}
 		},
 		methods: {
@@ -182,7 +243,19 @@
 				this.locked = false
 				this.loading = false
 
-				this.transform = "translateY(-1.5rem)"
+				this.$dispatch("loaded")
+
+				//this.transform = "translate(0, -0.3rem)"
+			},
+			showSlideNav() {
+				this.show = true
+
+				this.$dispatch("showSlideNav")
+			},
+			hideSlideNav() {
+				this.show = false
+
+				this.$dispatch("hideSlideNav")
 			},
 			selectTag() {
 				this.pop = true
@@ -198,7 +271,7 @@
 				document.body.scrollTop < 500 && (this.scrollTop = false)
 
 				// 滚动加载
-				if (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight) >= 0.6) {
+				if (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight) >= 0.7) {
 					 if (! this.locked) {
 					 	this.locked = true;
 

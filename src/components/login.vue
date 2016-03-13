@@ -2,7 +2,7 @@
 
 <template>
 	<div>
-		<header class="topic-hd">
+		<header class="header topic-hd">
 			<h2 class="title">登录</h2>
 		</header>
 		<div class="login-box">
@@ -21,17 +21,27 @@
 				token: ""
 			}
 		},
+		route: {
+			canActivate() {
+				if (localStorage.getItem("user")) {
+					return false
+				}
+			}
+		},
+		created() {
+			this.$dispatch("closeLoading")
+		},
 		methods: {
 			loginValidate() {
 				if (! this.token) {
-					return 
+					return
 				}
 
 				this.login()
 			},
 			async login() {
 				let data = await api.login(this.token)
-				let path = this.$route.query.redirect
+				let path = this.$route.query.redirect ? this.$route.query.redirect : "/"
 
 				if (data.success) {
 					// 记录 token
@@ -44,7 +54,7 @@
 
 					localStorage.setItem("user", JSON.stringify(data))
 
-					this.$dispatch("reviseTitle", data.loginname)
+					this.$dispatch("login", data)
 
 					this.$route.router.go(path)
 				}

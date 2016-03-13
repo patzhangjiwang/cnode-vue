@@ -1,16 +1,16 @@
 <style src="../css/topic.css"></style>
 
 <template>
-	<header class="topic-hd">
+	<header class="header topic-hd">
 		<a class="back-btn-wrap" v-link="{path: '/'}">
 			<i class="back-btn"></i>
 		</a>
 		<h2 class="title">帖子正文</h2>
-		<div class="login-btn"></div>
+		<!-- <div class="login-btn"></div> -->
 	</header>
-	<div class="loading-wrap topic-loading" v-if="loading">
+	<!-- <div class="loading-wrap topic-loading" v-if="loading">
 		<div class="loading">正在加载 客官骚等哈~~</div>
-	</div>
+	</div> -->
 	<div class="topic-container" v-if="! loading">
 		<div class="topic-content">
 			<div class="topic-header">
@@ -91,6 +91,7 @@
 		data() {
 			return {
 				loading: true,
+				show: false,
 				topic: {
 					author: {
 						loginname: "",
@@ -121,6 +122,8 @@
 			modal
 		},
 		created() {
+			this.$dispatch("loading")
+
 			this.getTopic()
 		},
 		computed: {
@@ -140,6 +143,14 @@
 
 			}
 		},
+		events: {
+			showSlideNav() {
+				this.show = true
+			},
+			hideSlideNav() {
+				this.show = false
+			}
+		},
 		methods: {
 			async getTopic() {
 				let data = await api.getTopic(this.$route.params.topicId)
@@ -147,6 +158,8 @@
 				this.topic = data.data
 
 				this.loading = false
+
+				this.$dispatch("loaded")
 			},
 			async like(id, item) {
 				let token = JSON.parse(localStorage.getItem("user")).token
@@ -166,11 +179,19 @@
 
 			},
 			toReply() {
+				if (! this.replyContent) {
+					return
+				}
+
 				let content = `${this.replyContent} <br> <br> ${this.user.tail}`
 
 				this.reply(content)
 			},
 			toSubReply(item) {
+				if (! item.replyContent) {
+					return
+				}
+
 				let replyName = `<a href="/profile/${item.author.loginname}">@${item.author.loginname}</a>`,
 					replyContent = item.replyContent
 
@@ -180,7 +201,7 @@
 			},
 			async reply(content, item) {
 				let token = this.user.token
-				
+
 				this.topic.replies.push({
 					author: {
 						loginname: this.user.loginname,

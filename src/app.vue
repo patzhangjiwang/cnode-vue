@@ -1,31 +1,29 @@
 <template>
-	<div>
-		<router-view :user="user"></router-view>
-		<nav class="nav" v-if="showNav">
-			<div class="nav-btn" :class="{'selected': selectHome}" @click="refresh">
-				<i class="iconfont">&#xe62d;</i>
-				首页
+	<div :class="{show: show}">
+		<section class="slide-nav-wrap" :class="{'show': show}" v-if="slide">
+			<div class="slide-nav">
+				<div class="user">
+					<template v-if="! user.loginname">
+						<span class="user-avatar-no"></span>
+						<span @click="goLogin">登录</span>
+					</template>
+					<template v-if="user.loginname">
+						<img :src="user.avatar_url">
+						<span v-text="user.loginname"></span>
+					</template>
+				</div>
+				<ul class="tag-list">
+					<li v-for="tag in tags" v-text="tag" @click="switchTag($index)"></li>
+				</ul>
+				<ul class="other-list">
+					<li v-for="item in items" v-text="item"></li>
+				</ul>
 			</div>
-			<div class="nav-btn" :class="{'selected': selectMessage}" @click="goMessage">
-				<i class="iconfont">&#xe640;</i>
-				消息
-			</div>
-			<div class="nav-btn add-btn" @click="goPost">
-				<i class="iconfont">&#xe6b9;</i>
-			</div>
-			<div class="nav-btn find-btn">
-				<i class="iconfont">&#xe6ac;</i>
-				发现
-			</div>
-			<div class="nav-btn" :class="{'selected': selectProfile}" @click="goProfile">
-				<i class="iconfont">&#xe6b8;</i>
-				我
-			</div>
-			<!-- <a class="nav-btn" v-link="{path: '/profile/' + user.loginname}">
-				<i class="iconfont">&#xe6b8;</i>
-				我
-			</a> -->
-		</nav>
+		</section>
+		<div class="loading-cover" v-if="loading" transition="loading">
+			<div class="loading-text">(´・ω・｀)正在加载...</div>
+		</div>
+		<router-view></router-view>
 	</div>
 </template>
 
@@ -33,7 +31,13 @@
 	export default {
 		data() {
 			return {
-				showNav: true,
+				tag: "全部",
+				show: false,
+				loading: true,
+				slide: false,
+				items: ["设置尾巴", "消息", "关于"],
+				tags: ["全部", "精华", "分享", "问答", "招聘"],
+				//transform: "translateX(0)",
 				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 			}
 		},
@@ -47,6 +51,13 @@
 			// 	id: "5617694c2fb53d5b4f2329bd"
 			// }))
 		},
+		watch: {
+			mask() {
+				// this.mask ? document.documentElement.classList.add("scroll-hide") : document.documentElement.classList.remove("scroll-hide")
+
+				// this.mask ? document.body.classList.add("scroll-hide") : document.body.classList.remove("scroll-hide")
+			}
+		},
 		computed: {
 			selectHome() {
 				return this.$route.path === "/"
@@ -59,14 +70,39 @@
 			}
 		},
 		events: {
+			loaded() {
+				this.loading = false
+			},
+			loading() {
+				this.loading = true
+			},
 			showNav() {
 				this.showNav = true
 			},
 			hideNav() {
 				this.showNav = false
 			},
+			login(data) {
+				this.user = data
+			},
 			reviseTitle(title) {
 				this.$broadcast("aaa", title)
+			},
+			showSlideNav() {
+				this.show = true
+
+				document.body.classList.add("show")
+			},
+			hideSlideNav() {
+				this.show = false
+
+				document.body.classList.remove("show")
+			},
+			showSlide() {
+				this.slide = true
+			},
+			closeLoading() {
+				this.loading = false
 			}
 		},
 		methods: {
@@ -107,6 +143,35 @@
 				//let username = JSON.parse(localStorage.getItem("info")).username
 
 				this.sureDirection("/profile/", "loginname")
+			},
+			showSlideNav() {
+				this.mask = true
+
+				this.transform = "translateX(3.88rem)"
+
+				this.$broadcast("showSlideNav")
+			},
+			hideSlideNav() {
+				this.mask = false
+
+				this.transform = "translateX(0)"
+
+				this.$broadcast("hideSlideNav")
+			},
+			goLogin() {
+				this.slide = false
+				this.show = false
+
+				this.$route.router.go("/login")
+			},
+			switchTag(index) {
+				this.show = false
+
+				this.loading = true
+
+				document.body.classList.remove("show")
+
+				this.$broadcast("hideSlideNav", index)
 			}
 		}
 	}
