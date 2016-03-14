@@ -44,6 +44,7 @@ export default {
 			body: `accesstoken=${token}`
 		}).catch((error) => {
 			console.log(error)
+			console.log(42423)
 		})
 
 		return await response.json().catch((error) => {

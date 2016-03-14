@@ -13,7 +13,7 @@
 				<div class="side-btn"></div>
 			</div>
 			<h1 class="title" v-text="tagText"></h1>
-			<div class="post-btn"></div>
+			<div class="post-btn">发表</div>
 		</header>
 	<div class="container" :class="{show: show}">
 		<!-- <div class="loading" v-if="! loading"></div> -->
@@ -63,20 +63,20 @@
 				<div class="item-btn-wrap">
 					<div class="btn visit-btn">
 						<span>
-							<i class="iconfont">&#xe767;</i>
+							<i class="iconfont">&#xe69d;</i>
 							{{item.visit_count}}
 						</span>
 					</div>
 					<div class="btn reply-btn">
 						<a v-link="{path: '/topic/' + item.id}">
 							<span>
-								<i class="iconfont">&#xe744;</i>
+								<i class="iconfont">&#xf0217;</i>
 								{{item.reply_count}}
 							</span>
 						</a>
 					</div>
 					<div class="btn share_btn">
-						<i class="iconfont">&#xe739;</i>
+						<i class="iconfont">&#xf01ba;</i>
 						分享
 					</div>
 				</div>
@@ -86,19 +86,23 @@
 			<div class="loading-text">(´・ω・｀)正在加载...</div>
 		</div>
 	</div>
+	<loading :loading="loading"></loading>
 	<div class="mask" v-if="show" @click="hideSlideNav"></div>
 	<div class="pop" :style="{height: height}" v-if="pop">
 		<ul class="tag-list">
 			<li v-for="tag in tags" v-text="tag.text"></li>
 		</ul>
 	</div>
-	<div class="back-top" @click="backTop" v-if="scrollTop"></div>
+	<div class="back-top" @click="backTop" v-if="scrollTop">
+		<i class="iconfont">&#xe758;</i>
+	</div>
 	<!-- </div> -->
 </template>
 
 <script>
 	import api from "../api"
 	import filters from "../filters"
+	import loading from "./loading.vue"
 
 	export default {
 		data() {
@@ -110,7 +114,7 @@
 				page: 1,
 				scrollTop: false,
 				locked: false,
-				//loading: true,
+				loading: true,
 				//pop: false,
 				show: false,
 				list: [],
@@ -159,12 +163,34 @@
 			}
 		},
 		route: {
+			data(transition) {
+				if (transition.from.name === "topic") {
+					this.list = JSON.parse(localStorage.getItem("list"))
+
+					this.$nextTick(() => {
+						this.loading = false
+						
+						document.body.scrollTop = + localStorage.getItem("scrollTop")
+						localStorage.removeItem("scrollTop")
+					})
+
+					return
+				}
+
+				this.getList()
+			},
 			deactivate() {
 				window.removeEventListener("scroll", this.scroll, false)
+
+				localStorage.setItem("scrollTop", window.pageYOffset)
 			}
 		},
+		components: {
+			loading
+		},
 		created() {
-			this.getList()
+			//localStorage.getItem("list") ? this.list = JSON.parse(localStorage.getItem("list")) : this.getList()
+			//this.getList()
 
 			this.$dispatch("showSlide")
 		},
@@ -243,7 +269,10 @@
 				this.locked = false
 				this.loading = false
 
-				this.$dispatch("loaded")
+				//this.$dispatch("loaded")
+
+				// 存储数据
+				localStorage.setItem("list", JSON.stringify(this.list))
 
 				//this.transform = "translate(0, -0.3rem)"
 			},
@@ -291,6 +320,8 @@
 		},
 		ready() {
 			window.addEventListener("scroll", this.scroll, false)
+
+			
 		}
 	}
 </script>

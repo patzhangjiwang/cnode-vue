@@ -1,7 +1,7 @@
 <style src="../css/login.css"></style>
 
 <template>
-	<div>
+	<!-- <div> -->
 		<header class="header topic-hd">
 			<h2 class="title">登录</h2>
 		</header>
@@ -9,16 +9,19 @@
 			<input type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
 			<a class="login-btn" href="javascript:;" @click="loginValidate">登录</a>
 		</div>
-	</div>
+		<tips :error-message="errorMessage"></tips>
+	<!-- </div> -->
 </template>
 
 <script>
 	import api from "../api"
+	import tips from "./tips.vue"
 
 	export default {
 		data() {
 			return {
-				token: ""
+				token: "",
+				errorMessage: ""
 			}
 		},
 		route: {
@@ -28,8 +31,11 @@
 				}
 			}
 		},
+		components: {
+			tips
+		},
 		created() {
-			this.$dispatch("closeLoading")
+			this.$dispatch("loaded")
 		},
 		methods: {
 			loginValidate() {
@@ -57,6 +63,16 @@
 					this.$dispatch("login", data)
 
 					this.$route.router.go(path)
+
+					return
+				}
+
+				if (! data.success) {
+					this.errorMessage = data.error_msg
+
+					setTimeout(() => {
+						this.errorMessage = ""
+					}, 2000)
 				}
 			}
 		},

@@ -77,6 +77,7 @@
 			<!-- <div class="reply-more" @click="loadMoreReply">显示更多评论</div> -->
 		</div>
 	</div>
+	<loading :loading="loading"></loading>
 	<modal :show.sync="showLoginModal"></modal>
 </template>
 
@@ -85,6 +86,7 @@
 	import filters from "../filters"
 	import modal from "./modal.vue"
 	import Vue from "vue"
+	import loading from "./loading.vue"
 
 	export default {
 		//props: ["user"],
@@ -119,7 +121,8 @@
 			}
 		},
 		components: {
-			modal
+			modal,
+			loading
 		},
 		created() {
 			this.$dispatch("loading")
@@ -158,6 +161,10 @@
 				this.topic = data.data
 
 				this.loading = false
+
+				// this.$nextTick(() => {
+				// 	this.loading = false
+				// })
 
 				this.$dispatch("loaded")
 			},

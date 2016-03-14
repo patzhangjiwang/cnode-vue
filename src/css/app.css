@@ -99,6 +99,7 @@ h1, h2, h4 {
 .post-btn {
 	width: 0.7rem;
 	height: inherit;
+	text-align: center;
 }
 
 .mask {
@@ -153,7 +154,7 @@ h1, h2, h4 {
 	background-color: #F8F8F8;
 }
 .user-avatar-no::after {
-	content: "\e6b8";
+	content: "\f0182";
 	color: #333;
 	font-size: 0.5rem;
 	font-family: "iconfont";
@@ -261,10 +262,13 @@ h1, h2, h4 {
 	width: 0.5rem;
 	height: 0.5rem;
 	position: fixed;
-	right: 1rem;
+	right: 0.6rem;
 	bottom: 2rem;
-	background-color: teal;
+	/* background-color: teal; */
 	/* visibility: hidden; */
+}
+.back-top i {
+	font-size: 0.5rem;
 }
 
 .modal-mask {
@@ -319,4 +323,21 @@ h1, h2, h4 {
 	font-size: 0.25rem;
 	line-height: 0.7rem;
 	background-color: #FF8200;
+}
+
+.tips {
+	padding: 0.15rem 0.2rem;
+	position: fixed;
+	bottom: 1.5rem;
+	left: 50%;
+	color: #FFF;
+	text-align: center;
+	border-radius: 4px;
+	background-color: rgba(0, 0, 0, 0.5);
+	transition: all 0.2s;
+	transform: translateX(-50%);
+}
+.tips-enter, .tips-leave {
+	opacity: 0;
+	transform: scale(1.1) translateX(-50%);
 }

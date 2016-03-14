@@ -4,7 +4,7 @@
 			<div class="modal-header">
 				<h4>登录以继续操作</h4>
 				<a href="javasctipt:;" @click="close">
-					<i class="iconfont">&#xe69a;</i>
+					<i class="iconfont">&#xf01b0;</i>
 				</a>
 			</div>
 			<div class="modal-content">

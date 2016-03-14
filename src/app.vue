@@ -20,9 +20,6 @@
 				</ul>
 			</div>
 		</section>
-		<div class="loading-cover" v-if="loading" transition="loading">
-			<div class="loading-text">(´・ω・｀)正在加载...</div>
-		</div>
 		<router-view></router-view>
 	</div>
 </template>
@@ -33,7 +30,7 @@
 			return {
 				tag: "全部",
 				show: false,
-				loading: true,
+				//loading: false,
 				slide: false,
 				items: ["设置尾巴", "消息", "关于"],
 				tags: ["全部", "精华", "分享", "问答", "招聘"],
@@ -160,7 +157,8 @@
 			},
 			goLogin() {
 				this.slide = false
-				this.show = false
+				//this.show = false
+				this.$emit("hideSlideNav")
 
 				this.$route.router.go("/login")
 			},

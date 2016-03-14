@@ -47,6 +47,7 @@ router.map({
 		component: Home
 	},
 	"/topic/:topicId": {
+		name: "topic",
 		component: Topic
 	},
 	"/login": {
