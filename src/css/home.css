@@ -111,9 +111,6 @@ body {
 .item-link {
 	display: block;
 }
-.item-content-img {
-	margin-top: 0.2rem;
-}
 
 .item-btn-wrap {
 	display: flex;

@@ -1,4 +1,4 @@
-import Vue from "Vue"
+//import Vue from "Vue"
 import Home from "./components/home.vue"
 import Topic from "./components/topic.vue"
 import Login from "./components/login.vue"
