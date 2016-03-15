@@ -2,6 +2,7 @@
 	<ul class="message-list">
 		<li v-for="item in items">
 			<a v-text="item" v-link="{path: $index === 0 ? '/message/unread' : '/message/read'}"></a>
+			<span></span>
 		</li>
 	</ul>
 </template>

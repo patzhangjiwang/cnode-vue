@@ -129,7 +129,7 @@
 		},
 		route: {
 			data(transition) {
-				if (transition.from.name === "topic") {
+				if (transition.from.path) {
 					let data = JSON.parse(localStorage.getItem("list"))
 					this.list = data.map((item) => {
 						item.lazy = true

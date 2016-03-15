@@ -9,7 +9,7 @@
 			<input type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
 			<a class="login-btn" href="javascript:;" @click="loginValidate">登录</a>
 		</div>
-		<tips :error-message="errorMessage"></tips>
+		<tips :message="errorMessage"></tips>
 	<!-- </div> -->
 </template>
 

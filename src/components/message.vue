@@ -13,6 +13,16 @@
 			return {
 				items: ["未读消息", "已读消息"]
 			}
+		},
+		route: {
+			canActivate(transition) {
+				if (! localStorage.getItem("user")) {
+					transition.redirect("/login?redirect=/message")
+					return false
+				}
+
+				return true
+			}
 		}
 	}
 </script>
