@@ -77,10 +77,27 @@ body {
 	padding: 0 0.2rem;
 	margin-bottom: 0.2rem;
 }
-.avatar {
+.avatar-cover {
 	width: 0.8rem;
+	height: 0.8rem;
 	margin-right: 0.3rem;
 	border-radius: 100%;
+	background: url(../images/loading.png) no-repeat center;
+	background-size: 100%;
+}
+.avatar-loaded {
+	background: none;
+}
+.avatar {
+	height: 0.8rem;
+	border-radius: 100%;
+	background-size: 100%;
+}
+.avatar-transition {
+	transition: all 0.4s;
+}
+.avatar-enter {
+	opacity: 0;
 }
 .item-detail {
 	flex: 1;

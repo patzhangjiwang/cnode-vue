@@ -10,9 +10,15 @@
 	</header>
 	<div class="container" :class="{show: show}">
 		<ul>
-			<li class="item" v-for="item in list">
+			<li class="item" v-for="item in list" :data-src="item.author.avatar_url" :data-id="item.id">
 				<div class="item-user-bar">
-					<img class="avatar" src="../images/loading.png" :data-src="item.author.avatar_url">
+					<!-- <img class="avatar" src="../images/loading.png"> -->
+					<div class="avatar-cover" :class="{'avatar-loaded': itemss.includes(item.id)}" v-if="! item.lazy">
+						<div class="avatar" :style="{backgroundImage: 'url(' + item.author.avatar_url + ')'}" transition="avatar" v-if="itemss.includes(item.id)"></div>
+					</div>
+					<div class="avatar-cover" :class="{'avatar-loaded': itemss.includes(item.id)}" v-if="item.lazy">
+						<div class="avatar" :style="{backgroundImage: 'url(' + item.author.avatar_url + ')'}" v-if="itemss.includes(item.id)"></div>
+					</div>
 					<div class="item-detail">
 						<span class="username" v-text="item.author.loginname"></span>
 						<span class="label" v-if="item.top">置顶</span>
@@ -75,7 +81,8 @@
 				loading: true,
 				show: false,
 				list: [],
-				$imgs: [],
+				$items: [],
+				itemss: [],
 				cates: {
 					share: {
 						text: "分享",
@@ -123,13 +130,22 @@
 		route: {
 			data(transition) {
 				if (transition.from.name === "topic") {
-					this.list = JSON.parse(localStorage.getItem("list"))
+					let data = JSON.parse(localStorage.getItem("list"))
+					this.list = data.map((item) => {
+						item.lazy = true
+
+						return item
+					})
+
+					this.itemss = JSON.parse(localStorage.getItem("itemss"))
 
 					this.$nextTick(() => {
 						this.loading = false
 
 						document.body.scrollTop = + localStorage.getItem("scrollTop")
 						localStorage.removeItem("scrollTop")
+
+						this.forLazy()
 					})
 
 					return
@@ -141,6 +157,7 @@
 				window.removeEventListener("scroll", this.scroll, false)
 
 				localStorage.setItem("scrollTop", window.pageYOffset)
+				localStorage.setItem("itemss", JSON.stringify(this.itemss))
 			}
 		},
 		components: {
@@ -185,6 +202,11 @@
 
 				localStorage.setItem("tag", this.tag)
 				localStorage.setItem("tagText", this.tagText)
+			},
+			hideSlideNav() {
+				this.show = false
+
+				document.body.classList.remove("show")
 			}
 		},
 		methods: {
@@ -196,22 +218,7 @@
 				this.locked = false
 				this.loading = false
 
-				this.$nextTick(() => {
-					this.$imgs = Array.from(document.querySelectorAll(".avatar"), (v) => {
-						// this.$imgs.push({
-						// 	img: v,
-						// 	position: v.getBoundingClientRect().top
-						// })
-
-						return {
-							img: v,
-							position: v.getBoundingClientRect().top
-						}
-					})
-
-					this.lazy()
-				})
-
+				this.forLazy()
 				//this.$dispatch("loaded")
 
 				// 存储数据
@@ -219,14 +226,39 @@
 
 				//this.transform = "translate(0, -0.3rem)"
 			},
-			lazy() {
-				this.$imgs =  this.$imgs.filter((img) => {
-					let top = img.img.getBoundingClientRect().top
-					let height = img.img.getBoundingClientRect().height
+			forLazy() {
+				this.$nextTick(() => {
+					this.$items = Array.from(document.querySelectorAll(".item"), (v) => {
+						// this.$imgs.push({
+						// 	img: v,
+						// 	position: v.getBoundingClientRect().top
+						// })
 
-					if (top >= 0 && top <= window.innerHeight - height) {
-						//console.log(top)
-						img.img.src = img.img.dataset.src
+						return {
+							item: v,
+							//img: v.querySelector(".avatar"),
+							position: v.getBoundingClientRect().top
+						}
+					})
+
+					this.lazy()
+				})
+			},
+			lazy() {
+				this.$items =  this.$items.filter((item) => {
+					let top = item.item.getBoundingClientRect().top
+					let height = item.item.getBoundingClientRect().height
+
+					if (top >= 0 && top <= window.innerHeight + height) {
+						//console.log(this.$itemss)
+
+						this.itemss.push(item.item.dataset.id)
+						item.item.removeAttribute("data-src")
+						item.item.removeAttribute("data-id")
+
+						// this.$nextTick(() => {
+						// 	item.img.style.backgroundImage = `url(${item.item.dataset.src})`
+						// })
 
 						return false
 					}
@@ -234,7 +266,7 @@
 					return true
 				})
 
-				console.log(this.$imgs.length)
+				console.log(this.$items.length)
 			},
 			showSlideNav() {
 				this.show = true
@@ -253,20 +285,20 @@
 				this.getList()
 			},
 			scroll() {
-				this.$imgs.length && this.lazy()
+				this.$items.length && this.lazy()
 
 				document.body.scrollTop >= 500 && (this.scrollTop = true)
 
 				document.body.scrollTop < 500 && (this.scrollTop = false)
 
 				// 滚动加载
-				// if (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight) >= 0.7) {
-				// 	 if (! this.locked) {
-				// 	 	this.locked = true;
+				if (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight) >= 0.7) {
+					 if (! this.locked) {
+					 	this.locked = true;
 
-				// 	 	this.loadMore()
-				// 	 }
-				// }
+					 	this.loadMore()
+					 }
+				}
 			},
 			backTop() {
 				document.body.scrollTop = 0

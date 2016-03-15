@@ -1,0 +1,16 @@
+body {
+	background-color: #F2F2F2;
+}
+
+.message-list {
+	margin-top: 1rem;
+}
+.message-list li {
+	margin-bottom: 0.2rem;
+	border-bottom: 1px solid #F1F2F3;
+	background-color: #FFF;
+}
+.message-list a {
+	display: block;
+	padding: 0.24rem 0.2rem;
+}

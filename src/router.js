@@ -3,9 +3,13 @@ import Home from "./components/home.vue"
 import Topic from "./components/topic.vue"
 import Login from "./components/login.vue"
 import Message from "./components/message.vue"
+import MessageDefault from "./components/message-default.vue"
+import Read from "./components/read.vue"
+import Unread from "./components/unread.vue"
 import Post from "./components/post.vue"
 import Profile from "./components/profile.vue"
-import Nickname from "./components/nickname.vue"
+import Tail from "./views/tail.vue"
+import About from "./views/about.vue"
 import VueRouter from "vue-router"
 
 Vue.use(VueRouter)
@@ -54,7 +58,18 @@ router.map({
 		component: Login
 	},
 	"/message": {
-		component: Message
+		component: Message,
+		subRoutes: {
+			"/": {
+				component: MessageDefault
+			},
+			"/read": {
+				component: Read
+			},
+			"/unread": {
+				component: Unread
+			}
+		}
 	},
 	"/post": {
 		component: Post
@@ -62,8 +77,11 @@ router.map({
 	"/profile/:username": {
 		component: Profile
 	},
-	"/profile/:username/nickname": {
-		component: Nickname
+	"/tail": {
+		component: Tail
+	},
+	"/about": {
+		component: About
 	}
 })
 

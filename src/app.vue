@@ -1,10 +1,13 @@
 <template>
 	<div :class="{show: show}">
 		<router-view></router-view>
+		<tips :message.sync="message"></tips>
 	</div>
 </template>
 
 <script>
+	import tips from "./components/tips.vue"
+
 	export default {
 		data() {
 			return {
@@ -13,8 +16,12 @@
 				//loading: false,
 				slide: false,
 				//transform: "translateX(0)",
+				message: "",
 				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 			}
+		},
+		components: {
+			tips
 		},
 		created() {
 			let deviceWidth = Math.min(640, document.documentElement.clientWidth)
@@ -75,6 +82,9 @@
 			},
 			closeLoading() {
 				this.loading = false
+			},
+			tailChanged(message) {
+				this.message = message
 			}
 		},
 		methods: {

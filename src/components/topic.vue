@@ -190,7 +190,7 @@
 					return
 				}
 
-				let content = `${this.replyContent} <br> <br> ${this.user.tail}`
+				let content = `${this.replyContent} <br> <br>${this.user.tail}`
 
 				this.reply(content)
 			},
@@ -202,7 +202,7 @@
 				let replyName = `<a href="/profile/${item.author.loginname}">@${item.author.loginname}</a>`,
 					replyContent = item.replyContent
 
-				let content = `${replyName} ${item.replyContent} <br> <br> ${this.user.tail}`
+				let content = `${replyName} ${item.replyContent} <br> <br>${this.user.tail}`
 
 				this.reply(content, item)
 			},

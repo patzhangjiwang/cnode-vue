@@ -15,7 +15,7 @@
 				<li v-for="tag in tags" v-text="tag" @click="switchTag($index)"></li>
 			</ul>
 			<ul class="other-list">
-				<li v-for="item in items" v-text="item"></li>
+				<li v-for="item in items" v-text="item" @click="goOther($index)"></li>
 			</ul>
 		</div>
 	</section>
@@ -28,25 +28,34 @@
 			return {
 				items: ["设置尾巴", "消息", "关于"],
 				tags: ["全部", "精华", "分享", "问答", "招聘"],
+				other: ["/tail", "/message", "/about"],
 				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 			}
 		},
 		methods: {
 			goLogin() {
-				this.slide = false
+				//this.slide = false
 				//this.show = false
-				this.$emit("hideSlideNav")
+				//this.$emit("hideSlideNav")
+				this.$dispatch("hideSlideNav")
 
 				this.$route.router.go("/login")
 			},
 			switchTag(index) {
-				this.show = false
+				//this.show = false
 
 				//this.loading = true
 
-				document.body.classList.remove("show")
+				//document.body.classList.remove("show")
 
+				this.$dispatch("hideSlideNav")
 				this.$dispatch("switchTag", index)
+			},
+			goOther(index) {
+				//this.slide = false
+				this.$dispatch("hideSlideNav")
+
+				this.$route.router.go(this.other[index])
 			}
 		}
 	}

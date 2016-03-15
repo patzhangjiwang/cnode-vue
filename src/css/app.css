@@ -1,4 +1,4 @@
-p, ul, li, div, h1, h2, h4, body {
+p, ul, li, div, h1, h2, h4, h5, body {
 	padding: 0;
 	margin: 0;
 }
@@ -20,7 +20,7 @@ img {
 li {
 	list-style: none;
 }
-h1, h2, h4 {
+h1, h2, h4, h5 {
 	font-weight: normal;
 }
 
@@ -330,11 +330,12 @@ h1, h2, h4 {
 	position: fixed;
 	bottom: 1.5rem;
 	left: 50%;
+	z-index: 7;
 	color: #FFF;
 	text-align: center;
 	border-radius: 4px;
 	background-color: rgba(0, 0, 0, 0.5);
-	transition: all 0.2s;
+	transition: all 0.3s;
 	transform: translateX(-50%);
 }
 .tips-enter, .tips-leave {

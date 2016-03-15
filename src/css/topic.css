@@ -106,6 +106,7 @@
 .reply-item .avatar {
 	width: 0.62rem;
 	height: 0.62rem;
+	margin-right: 0.3rem;
 }
 .reply-name {
 	color: #225D99;
