@@ -82,10 +82,10 @@
 </template>
 
 <script>
-	import api from "../api"
+	import {getTopic, like, reply} from "../api"
 	import filters from "../filters"
 	import modal from "./modal.vue"
-	import Vue from "vue"
+	//import Vue from "vue"
 	import loading from "./loading.vue"
 
 	export default {
@@ -156,7 +156,7 @@
 		},
 		methods: {
 			async getTopic() {
-				let data = await api.getTopic(this.$route.params.topicId)
+				let data = await getTopic(this.$route.params.topicId)
 
 				this.topic = data.data
 
@@ -170,7 +170,7 @@
 			},
 			async like(id, item) {
 				let token = JSON.parse(localStorage.getItem("user")).token
-				let data = await api.like(id, token)
+				let data = await like(id, token)
 
 				if (data.success && data.action === "up") {
 					item.ups.push(JSON.parse(localStorage.getItem("user")).id)
@@ -231,7 +231,7 @@
 				item.replyContent = ""
 				item.replyState = false
 
-				let data = await api.reply(token, this.$route.params.topicId, content, item.id)
+				let data = await reply(token, this.$route.params.topicId, content, item.id)
 			},
 			forLike() {
 				this.showLoginModal = true

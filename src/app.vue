@@ -85,6 +85,12 @@
 			},
 			tailChanged(message) {
 				this.message = message
+			},
+			addBgClass() {
+				document.body.classList.add("bg")
+			},
+			removeBgClass() {
+				document.body.classList.remove("bg")
 			}
 		},
 		methods: {

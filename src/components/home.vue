@@ -67,7 +67,7 @@
 </template>
 
 <script>
-	import api from "../api"
+	import {getList} from "../api"
 	import filters from "../filters"
 	import loading from "./loading.vue"
 	import slide from "./slide.vue"
@@ -211,7 +211,7 @@
 		},
 		methods: {
 			async getList() {
-				let data = await api.getList(this.page, this.tag)
+				let data = await getList(this.page, this.tag)
 
 				this.list = this.list.concat(data.data)
 

@@ -15,22 +15,31 @@
 				<li v-for="tag in tags" v-text="tag" @click="switchTag($index)"></li>
 			</ul>
 			<ul class="other-list">
-				<li v-for="item in items" v-text="item" @click="goOther($index)"></li>
+				<li v-for="item in items">
+					<span v-text="item" @click="goOther($index)" v-if="$index !== 1"></span>
+					<span v-text="item" @click="goOther($index)" :data-count="count" v-if="$index === 1"></span>
+				</li>
 			</ul>
 		</div>
 	</section>
 </template>
 
 <script>
+	import {getMessageCount} from "../api"
+
 	export default {
 		props: ["show"],
 		data() {
 			return {
+				count: "",
 				items: ["设置尾巴", "消息", "关于"],
 				tags: ["全部", "精华", "分享", "问答", "招聘"],
 				other: ["/tail", "/message", "/about"],
 				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 			}
+		},
+		created() {
+			this.getMessageCount()
 		},
 		methods: {
 			goLogin() {
@@ -56,6 +65,11 @@
 				this.$dispatch("hideSlideNav")
 
 				this.$route.router.go(this.other[index])
+			},
+			async getMessageCount() {
+				let data = await getMessageCount(this.user.token)
+
+				this.count = data.data ? data.data : ""
 			}
 		}
 	}

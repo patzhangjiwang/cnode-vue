@@ -22,6 +22,14 @@
 				}
 
 				return true
+			},
+			activate() {
+				this.$dispatch("addBgClass")
+			},
+			deactivate(transition) {
+				this.$dispatch("removeBgClass")
+
+				transition.next()
 			}
 		}
 	}

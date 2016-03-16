@@ -1,8 +1,8 @@
 <template>
 	<ul class="message-list">
-		<li v-for="item in items">
+		<li class="mg-item" v-for="item in items">
 			<a v-text="item" v-link="{path: $index === 0 ? '/message/unread' : '/message/read'}"></a>
-			<span></span>
+			<span class="arrow"></span>
 		</li>
 	</ul>
 </template>

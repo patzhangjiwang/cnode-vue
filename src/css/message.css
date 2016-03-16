@@ -1,27 +1,39 @@
-body {
-	background-color: #F2F2F2;
-}
-
 .message-list {
 	margin-top: 1rem;
 }
 .message-list li {
+	padding: 0.2rem 0;
+	margin-bottom: 0.3rem;
+	border-bottom: 1px solid #F1F2F3;
+	background-color: #FFF;
+}
+.message-list .mg-item {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 0.2rem;
-	margin-bottom: 0.2rem;
-	border-bottom: 1px solid #F1F2F3;
-	background-color: #FFF;
+}
+.message-list img {
+	width: 0.8rem;
+	margin-right: 0.2rem;
 }
 .message-list a {
-	flex: 1;
+	/* flex: 1; */
 	padding: 0.24rem 0;
 }
-.message-list span {
+.mg-item a {
+	flex: 1;
+}
+.arrow {
 	width: 0.2rem;
 	height: 0.2rem;
 	border-top: 1px solid #333;
 	border-right: 1px solid #333;
 	transform: rotate(45deg);
+}
+.item-quote {
+	padding-top: 0.2rem;
+	margin: 0 0.2rem;
+	border-top: 1px solid #DDD;
+	/* background-color: #F1F1F1; */
 }

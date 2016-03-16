@@ -10,6 +10,9 @@ body {
 body.show {
 	overflow-y: hidden;
 }
+body.bg {
+	background-color: #F2F2F2;
+}
 a {
 	color: #333;
 	text-decoration: none;
@@ -176,6 +179,18 @@ h1, h2, h4, h5 {
 .slide-nav li {
 	line-height: 0.7rem;
 }
+.other-list span {
+	display: block;
+}
+.other-list li:nth-of-type(2) span {
+	position: relative;
+}
+.other-list li:nth-of-type(2) span::after {
+	content: attr(data-count);
+	position: absolute;
+	top: 0;
+	right: 0.2rem;
+}
 
 .nav {
 	display: flex;
@@ -341,4 +356,13 @@ h1, h2, h4, h5 {
 .tips-enter, .tips-leave {
 	opacity: 0;
 	transform: scale(1.1) translateX(-50%);
+}
+
+.no-data {
+	width: 100%;
+	position: fixed;
+	top: 50%;
+	color: #929292;
+	text-align: center;
+	transform: translateY(-50%);
 }

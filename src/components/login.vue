@@ -14,7 +14,7 @@
 </template>
 
 <script>
-	import api from "../api"
+	import {login} from "../api"
 	import tips from "./tips.vue"
 
 	export default {
@@ -46,7 +46,7 @@
 				this.login()
 			},
 			async login() {
-				let data = await api.login(this.token)
+				let data = await login(this.token)
 				let path = this.$route.query.redirect ? this.$route.query.redirect : "/"
 
 				if (data.success) {
