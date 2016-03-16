@@ -6,7 +6,7 @@
 			<div class="side-btn"></div>
 		</div>
 		<h1 class="title" v-text="tagText"></h1>
-		<div class="post-btn">发表</div>
+		<a class="post-btn" v-link="{path: '/post'}">发表</a>
 	</header>
 	<div class="container" :class="{show: show}">
 		<ul>
