@@ -7,7 +7,7 @@
 		</header>
 		<div class="login-box">
 			<input type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
-			<a class="login-btn" href="javascript:;" @click="loginValidate">登录</a>
+			<a class="login-btn" href="javascript:;" v-touch="loginValidate">登录</a>
 		</div>
 		<tips :message="errorMessage"></tips>
 	<!-- </div> -->

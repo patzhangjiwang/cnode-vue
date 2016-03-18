@@ -6,7 +6,11 @@
 </template>
 
 <script>
+	//import Vue from "vue"
+	import directive from "./directives"
 	import tips from "./components/tips.vue"
+
+	Vue.directive("touch", directive)
 
 	export default {
 		data() {
@@ -91,7 +95,10 @@
 			},
 			removeBgClass() {
 				document.body.classList.remove("bg")
-			}
+			},
+			postError(message) {
+				this.message = message
+			},
 		},
 		methods: {
 			refresh() {

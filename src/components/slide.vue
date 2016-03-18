@@ -4,7 +4,7 @@
 			<div class="user">
 				<template v-if="! user.loginname">
 					<span class="user-avatar-no"></span>
-					<span @click="goLogin">登录</span>
+					<span v-touch="goLogin">登录</span>
 				</template>
 				<template v-if="user.loginname">
 					<img :src="user.avatar_url">

@@ -48,7 +48,7 @@ module.exports = {
 		new ExtractTextPlugin("app.css")
 	],
 	externals: {
-		Vue: "Vue"
+		vue: "Vue"
 	},
 	devServer: {
 		historyApiFallback: true,

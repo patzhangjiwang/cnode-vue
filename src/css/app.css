@@ -5,6 +5,7 @@ p, ul, li, div, h1, h2, h4, h5, body {
 
 body {
 	font-size: 0.25rem;
+	font-family: STHeiti,"Microsoft YaHei", Helvetica, Arial, sans-serif;
 	/* background-color: #F2F2F2; */
 }
 body.show {
@@ -82,6 +83,7 @@ h1, h2, h4, h5 {
 	height: 2px;
 	margin: auto;
 	position: relative;
+	border-radius: 5px;
 	background-color: #333;
 }
 .side-btn::before, .side-btn::after {
@@ -90,6 +92,7 @@ h1, h2, h4, h5 {
 	height: 100%;
 	position: absolute;
 	top: -0.12rem;
+	border-radius: 5px;
 	background-color: #333;
 }
 .side-btn::after {
@@ -112,6 +115,12 @@ h1, h2, h4, h5 {
 	top: 0;
 	z-index: 5;
 	background-color: rgba(0, 0, 0, 0.3);
+}
+.mask-transition {
+	transition: all 0.3s;
+}
+.mask-enter, .mask-leave {
+	opacity: 0;
 }
 
 .slide-nav-wrap {
@@ -341,6 +350,7 @@ h1, h2, h4, h5 {
 }
 
 .tips {
+	width: 50%;
 	padding: 0.15rem 0.2rem;
 	position: fixed;
 	bottom: 1.5rem;

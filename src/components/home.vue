@@ -2,7 +2,7 @@
 
 <template>
 	<header class="header" :class="{show: show}">
-		<div class="side-btn-wrap" @click="showSlideNav">
+		<div class="side-btn-wrap" v-touch="showSlideNav">
 			<div class="side-btn"></div>
 		</div>
 		<h1 class="title" v-text="tagText"></h1>
@@ -60,8 +60,8 @@
 	</div>
 	<slide :show.sync="show"></slide>
 	<loading :loading="loading"></loading>
-	<div class="mask" v-if="show" @click="hideSlideNav"></div>
-	<div class="back-top" @click="backTop" v-if="scrollTop">
+	<div class="mask" transition="mask" v-if="show" v-touch="hideSlideNav"></div>
+	<div class="back-top" v-touch="backTop" v-if="scrollTop">
 		<i class="iconfont">&#xe758;</i>
 	</div>
 </template>

@@ -26,3 +26,20 @@
 .post-item input::-webkit-input-placeholder {
 	color: #555;
 }
+
+.go-post-btn {
+	width: 0.8rem;
+	position: absolute;
+	top: 50%;
+	right: 0.2rem;
+	color: #9FBE96;
+	text-align: center;
+	line-height: 0.52rem;
+	border-radius: 5px;
+	background-color: #3F7D2D;
+	transform: translateY(-50%);
+}
+.highlight {
+	color: #FFF;
+	background-color: green;
+}

@@ -133,3 +133,21 @@ export let getMessageCount = async (token) => {
 		console.log(error)
 	})
 }
+
+export let post = async ({token, title, tab, content}) => {
+	let response = await fetch("https://cnodejs.org/api/v1/topics", {
+		//credentials: "include",
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		},
+		mode: "cors",
+		body: `accesstoken=${token}&title=${title}&tab=${tab}&content=${content}`
+	}).catch((error) => {
+		console.log(error)
+	})
+
+	return await response.json().catch((error) => {
+		console.log(error)
+	})
+}

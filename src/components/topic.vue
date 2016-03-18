@@ -43,11 +43,11 @@
 									<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 								</template>
 								<template v-else>
-									<span class="del" @click="del">删除</span>
+									<span class="del" v-touch="del">删除</span>
 								</template>
 							</template>
 							<template v-else>
-								<span class="like" @click="forLike">赞</span>
+								<span class="like" v-touch="forLike">赞</span>
 								<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 							</template>
 							<div class="reply-box" v-if="item.replyState">
@@ -71,7 +71,7 @@
 				</div>
 				<div class="reply-edit-btn-wrap" v-if="replyState">
 					<span class="reply-edit-btn" @click="replyState = false">取消</span>
-					<span class="reply-edit-btn" @click="toReply">评论</span>
+					<span class="reply-edit-btn" v-touch="toReply">评论</span>
 				</div>
 			</div>
 			<!-- <div class="reply-more" @click="loadMoreReply">显示更多评论</div> -->
@@ -223,7 +223,7 @@
 					this.replyContent = ""
 					this.replyState = false
 
-					let data = await api.reply(token, this.$route.params.topicId, content)
+					let data = await reply(token, this.$route.params.topicId, content)
 
 					return
 				}
