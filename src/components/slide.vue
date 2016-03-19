@@ -12,12 +12,12 @@
 				</template>
 			</div>
 			<ul class="tag-list">
-				<li v-for="tag in tags" v-text="tag" @click="switchTag($index)"></li>
+				<li :data-index="$index" v-for="tag in tags" v-text="tag" v-touch:index="switchTag"></li>
 			</ul>
 			<ul class="other-list">
 				<li v-for="item in items">
-					<span v-text="item" @click="goOther($index)" v-if="$index !== 1"></span>
-					<span v-text="item" @click="goOther($index)" :data-count="count" v-if="$index === 1"></span>
+					<span :data-index="$index" v-text="item" v-touch:index="goOther" v-if="$index !== 1"></span>
+					<span :data-index="$index" v-text="item" v-touch:index="goOther" :data-count="count" v-if="$index === 1"></span>
 				</li>
 			</ul>
 		</div>
@@ -39,6 +39,7 @@
 			}
 		},
 		created() {
+			console.log("创建")
 			this.getMessageCount()
 		},
 		methods: {

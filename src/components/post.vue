@@ -12,7 +12,7 @@
 		<li class="post-item">
 			<input type="text" placeholder="表做标题党啊" v-focus="title" v-model="title" />
 		</li>
-		<li class="post-item">选择一个标签</li>
+		<li class="post-item tag-item" :data-tag="tag" v-touch="selectTag">选择一个标签</li>
 	</ul>
 	<div class="post-container">
 		<textarea class="post-content" placeholder="这一刻的想法..." v-model="content" @keyup.enter="toPost"></textarea>
@@ -22,19 +22,27 @@
 			字
 		</p>
 	</div>
+	<div class="select-tag" transition="select" v-if="show">
+		<ul>
+			<li :data-tag="tag" v-for="tag in tags" v-text="tag" v-touch:tag="hideTag"></li>
+		</ul>
+	</div>
 
 </template>
 
 <script>
 	import {post} from "../api"
+	import filter from "../filters"
 
 	export default {
 		data() {
 			return {
 				title: "",
-				tag: "ask",
+				tag: "问答",
 				content: "",
 				count: 0,
+				show: false,
+				tags: ["问答", "分享", "招聘"],
 				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
 			}
 		},
@@ -73,6 +81,14 @@
 			}
 		},
 		methods: {
+			selectTag() {
+				this.show = true
+			},
+			hideTag(tag) {
+				this.show = false
+
+				this.tag = tag
+			},
 			toPost(e) {
 				if (! e.ctrlKey) {
 					return
@@ -91,14 +107,55 @@
 					return
 				}
 
+				let tags = {
+					问答: "ask",
+					分享: "share",
+					招聘: "job"
+				}
+
+				let topicData = {
+					author: {
+						loginname: this.user.loginname,
+						avatar_url: this.user.avatar_url
+					},
+					content: '<div class="markdown-text"></div>',
+					create_at: filter.ISOTimeFormat(Date.now()),
+					good: false,
+					id: "",
+					reply_count: 0,
+					tab: tags[this.tag],
+					title: this.title,
+					top: false,
+					visit_count: 0
+				}
+
 				let data = await post({
 					token: this.user.token,
 					title: this.title,
-					tab: this.tag,
+					tab: tags[this.tag],
 					content: this.content
 				})
 
 				if (data.success) {
+					// 本地保存
+					let index = 0
+					let list = JSON.parse(localStorage.getItem("list"))
+
+					for (let {top} of list) {
+						if (! top) {
+							break
+						}
+
+						index++
+					}
+
+					topicData.id = data.topic_id
+
+					list.splice(index, 0, topicData)
+
+					localStorage.setItem("list", JSON.stringify(list))
+
+					// 跳转
 					this.$route.router.go("/")
 				}
 			}

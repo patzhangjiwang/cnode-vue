@@ -60,7 +60,7 @@
 	</div>
 	<slide :show.sync="show"></slide>
 	<loading :loading="loading"></loading>
-	<div class="mask" transition="mask" v-if="show" v-touch="hideSlideNav"></div>
+	<div class="mask" v-if="show" v-touch="hideSlideNav"></div>
 	<div class="back-top" v-touch="backTop" v-if="scrollTop">
 		<i class="iconfont">&#xe758;</i>
 	</div>
@@ -211,6 +211,7 @@
 		},
 		methods: {
 			async getList() {
+				console.log(this.page)
 				let data = await getList(this.page, this.tag)
 
 				this.list = this.list.concat(data.data)
@@ -266,7 +267,7 @@
 					return true
 				})
 
-				console.log(this.$items.length)
+				//console.log(this.$items.length)
 			},
 			showSlideNav() {
 				this.show = true
