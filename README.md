@@ -1,6 +1,6 @@
 # cnode-vue
 
-> Vue版 cnodejs.org社区 WebApp
+> [线上访问](http://vuejs.github.io/vue-loader) Vue版 cnodejs.org社区 WebApp
 
 ## Build Setup
 
@@ -11,5 +11,3 @@ npm install
 # build for production
 npm run build
 ```
-
-[线上访问](http://vuejs.github.io/vue-loader).
