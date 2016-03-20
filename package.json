@@ -4,6 +4,7 @@
   "description": "Vue版 cnodejs.org社区 WebApp",
   "main": "index.js",
   "scripts": {
+    "start": "node server",
     "dev": "webpack-dev-server --hot --inline --progress",
     "build": "webpack --colors --progress --config webpack.prod.conf.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +18,9 @@
     "vue"
   ],
   "author": "ihanyang",
+  "engines": {
+    "node": "0.10.x"
+    },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ihanyang/cnode-vue/issues"

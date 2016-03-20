@@ -6,4 +6,4 @@ var app = koa()
 console.log(__dirname)
 app.use(serve(__dirname))
 
-app.listen(8080)
+app.listen(process.env.PORT || 8080)
