@@ -19,7 +19,7 @@
   ],
   "author": "ihanyang",
   "engines": {
-    "node": "0.10.x"
+    "node": ">=0.10"
     },
   "license": "MIT",
   "bugs": {
