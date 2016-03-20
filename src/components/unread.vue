@@ -17,14 +17,13 @@
 		</li>
 	</ul>
 	<loading :loading="loading"></loading>
-	<no-data v-if="noData"></no-data>
+	<div class="no-data" v-if="noData">空空如也( >﹏&lt;。)～</div>
 </template>
 
 <script>
 	import {getMessages} from "../api"
 	import filters from "../filters"
 	import loading from "./loading.vue"
-	import noData from "./no-data.vue"
 
 	export default {
 		data() {
@@ -36,8 +35,7 @@
 			}
 		},
 		components: {
-			loading,
-			noData
+			loading
 		},
 		route: {
 			data(transition) {

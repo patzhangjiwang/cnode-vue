@@ -1,13 +1,11 @@
-//import Vue from "Vue"
-import Home from "./components/home.vue"
-import Topic from "./components/topic.vue"
-import Login from "./components/login.vue"
-import Message from "./components/message.vue"
+import Home from "./views/home.vue"
+import Topic from "./views/topic.vue"
+import Login from "./views/login.vue"
+import Message from "./views/message.vue"
 import MessageDefault from "./components/message-default.vue"
 import Read from "./components/read.vue"
 import Unread from "./components/unread.vue"
-import Post from "./components/post.vue"
-import Profile from "./components/profile.vue"
+import Post from "./views/post.vue"
 import Tail from "./views/tail.vue"
 import About from "./views/about.vue"
 import VueRouter from "vue-router"
@@ -72,9 +70,6 @@ router.map({
 	},
 	"/post": {
 		component: Post
-	},
-	"/profile/:username": {
-		component: Profile
 	},
 	"/tail": {
 		component: Tail

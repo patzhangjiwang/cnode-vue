@@ -1,17 +1,22 @@
 {
   "name": "cnode-vue",
   "version": "1.0.0",
-  "description": "> A Vue.js project",
+  "description": "Vue版 cnodejs.org社区 WebApp",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --hot --inline --progress",
+    "build": "webpack --colors --progress --config webpack.prod.conf.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ihanyang/cnode-vue.git"
   },
-  "author": "",
+  "keywords": [
+    "cnode",
+    "vue"
+  ],
+  "author": "ihanyang",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ihanyang/cnode-vue/issues"
@@ -36,6 +41,7 @@
     "es6-promise": "^3.1.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^2.10.0",
     "kneden": "^1.0.2",
     "postcss": "^5.0.19",
     "postcss-loader": "^0.8.1",

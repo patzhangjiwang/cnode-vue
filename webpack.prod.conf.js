@@ -1,16 +1,15 @@
-var path              = require("path")
-var vue               = require("vue-loader")
+var path = require("path")
+var webpack = require("webpack")
+var autoprefixer = require("autoprefixer")
+var htmlPlugin = require("html-webpack-plugin")
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
-var webpack           = require("webpack")
-var postcss           = require("postcss-loader")
-var autoprefixer      = require("autoprefixer")
 
 module.exports = {
 	entry: "./src/app.js",
 	output: {
-		path: "D:/wamp/www/wanba-git/shouyou_m/assets/",
-		filename: "developer.js",
-		publicPath: "/assets/"
+		path: path.resolve(__dirname, "./dist"),
+		filename: "[hash].js",
+		publicPath: "/dist/"
 	},
 	module: {
 		loaders: [
@@ -28,14 +27,14 @@ module.exports = {
 				loader: ExtractTextPlugin.extract("style-loader", "css!postcss")
 			},
 			{
-				test: /\.(png|jpg|gif)$/,
-				loader: "url-loader?limit=8192"
+				test: /\.(png|jpg|gif|ttf|svg|ico)$/,
+				loader: "url-loader",
+				query: {
+					name: "[hash].[ext]",
+					limit: 10000,
+				}
 			}
 		]
-	},
-	babel: {
-		presets: ["es2015", "stage-3"],
-		plugins: ["transform-runtime"]
 	},
 	postcss: [
 		autoprefixer({
@@ -44,6 +43,11 @@ module.exports = {
 	],
 	plugins: [
 		new ExtractTextPlugin("[contenthash].css"),
+		new htmlPlugin({
+			template: "./index-tpl.html",
+			inject: "body",
+			filename: "../index.html"
+		}),
 		new webpack.DefinePlugin({
 			"process.env": {
 				NODE_ENV: "production"
@@ -57,9 +61,7 @@ module.exports = {
 		new webpack.optimize.OccurrenceOrderPlugin()
 	],
 	externals: {
-		Vue: "Vue"
-	}
+		vue: "Vue"
+	},
+	devtool: "source-map"
 }
-
-
-

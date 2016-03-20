@@ -8,7 +8,6 @@ module.exports = {
 		path: path.resolve(__dirname, "./dist"),
 		filename: "app.js",
 		publicPath: "/dist/"
-		//chunkFilename: "[chunkhash].js"
 	},
 	module: {
 		loaders: [
@@ -35,10 +34,6 @@ module.exports = {
 			}
 		]
 	},
-	// babel: {
-	// 	presets: ["es2015", "stage-3"],
-	// 	plugins: ["transform-runtime"]
-	// },
 	postcss: [
 		autoprefixer({
 			browsers: "> 1%"
