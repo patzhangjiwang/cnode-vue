@@ -20,16 +20,16 @@
   "author": "ihanyang",
   "engines": {
     "node": ">=0.10"
-    },
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ihanyang/cnode-vue/issues"
   },
   "homepage": "https://github.com/ihanyang/cnode-vue#readme",
   "dependencies": {
-    "koa": "^1.2.0",
-    "koa-static": "^2.0.0",
+    "express": "^4.13.4",
     "normalize.css": "^3.0.3",
+    "serve-static": "^1.10.2",
     "vue": "^1.0.17",
     "vue-router": "^0.7.11"
   },

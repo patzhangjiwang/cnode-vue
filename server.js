@@ -1,9 +1,9 @@
-var koa = require("koa")
-var serve = require("koa-static")
+var express = require("express")
+var serve = require("serve-static")
 
-var app = koa()
+var app = express()
 
-console.log(__dirname)
+//console.log(__dirname)
 app.use(serve(__dirname))
 
 app.listen(process.env.PORT || 8080)
