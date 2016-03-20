@@ -148,12 +148,16 @@
 						this.forLazy()
 					})
 
+					this.page = this.$root.page
+
 					return
 				}
 
 				this.getList()
 			},
 			deactivate() {
+				this.$root.page = this.page
+
 				window.removeEventListener("scroll", this.scroll, false)
 
 				localStorage.setItem("scrollTop", window.pageYOffset)

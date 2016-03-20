@@ -39,8 +39,13 @@
 			}
 		},
 		created() {
-			console.log("创建")
-			this.getMessageCount()
+			//避免多次请求接口
+			this.$dispatch("isRequestMessageCount")
+		},
+		events: {
+			sureRequestMessageCount(status) {
+				! status && this.getMessageCount()
+			}
 		},
 		methods: {
 			goLogin() {

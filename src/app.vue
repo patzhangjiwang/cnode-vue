@@ -19,6 +19,7 @@
 				show: false,
 				//loading: false,
 				slide: false,
+				status: false,
 				//transform: "translateX(0)",
 				message: "",
 				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
@@ -99,6 +100,11 @@
 			postError(message) {
 				this.message = message
 			},
+			isRequestMessageCount() {
+				this.$broadcast("sureRequestMessageCount", this.status)
+
+				this.status = true
+			}
 		},
 		methods: {
 			refresh() {
