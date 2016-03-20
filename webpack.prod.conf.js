@@ -1,14 +1,13 @@
 var path = require("path")
 var webpack = require("webpack")
 var autoprefixer = require("autoprefixer")
-var htmlPlugin = require("html-webpack-plugin")
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 module.exports = {
 	entry: "./src/app.js",
 	output: {
 		path: path.resolve(__dirname, "./dist"),
-		filename: "[hash].js",
+		filename: "app.js",
 		publicPath: "/dist/"
 	},
 	module: {
@@ -42,12 +41,7 @@ module.exports = {
 		})
 	],
 	plugins: [
-		new ExtractTextPlugin("[contenthash].css"),
-		new htmlPlugin({
-			template: "./index-tpl.html",
-			inject: "body",
-			filename: "../index.html"
-		}),
+		new ExtractTextPlugin("app.css"),
 		new webpack.DefinePlugin({
 			"process.env": {
 				NODE_ENV: "production"

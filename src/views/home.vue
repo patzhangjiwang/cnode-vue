@@ -68,7 +68,7 @@
 
 <script>
 	import {getList} from "../api"
-	import filters from "../filters"
+	import {timeFormat} from "../filters"
 	import loading from "../components/loading.vue"
 	import slide from "../components/slide.vue"
 
@@ -83,24 +83,6 @@
 				list: [],
 				$items: [],
 				itemss: [],
-				cates: {
-					share: {
-						text: "分享",
-						color: "#1ABC9C"
-					},
-					job: {
-						text: "招聘",
-						color: "#9B59B6"
-					},
-					ask: {
-						text: "问答",
-						color: "#3498DB"
-					},
-					good: {
-						text: "精华",
-						color: "#E67E22"
-					}
-				},
 				tags: [
 					{
 						tag: "all",
@@ -129,8 +111,10 @@
 		},
 		route: {
 			data(transition) {
+				// 判断是否是从其它路径进来
 				if (transition.from.path) {
 					let data = JSON.parse(localStorage.getItem("list"))
+
 					this.list = data.map((item) => {
 						item.lazy = true
 
@@ -175,7 +159,7 @@
 		},
 		filters: {
 			timeFormat(value) {
-				return filters.timeFormat(value)
+				return timeFormat(value)
 			},
 			textFormat(value) {
 				let str,
@@ -208,14 +192,11 @@
 				localStorage.setItem("tagText", this.tagText)
 			},
 			hideSlideNav() {
-				this.show = false
-
-				document.body.classList.remove("show")
+				this.hideSlideNav()
 			}
 		},
 		methods: {
 			async getList() {
-				console.log(this.page)
 				let data = await getList(this.page, this.tag)
 
 				this.list = this.list.concat(data.data)
@@ -224,24 +205,14 @@
 				this.loading = false
 
 				this.forLazy()
-				//this.$dispatch("loaded")
 
-				// 存储数据
 				localStorage.setItem("list", JSON.stringify(this.list))
-
-				//this.transform = "translate(0, -0.3rem)"
 			},
 			forLazy() {
 				this.$nextTick(() => {
 					this.$items = Array.from(document.querySelectorAll(".item"), (v) => {
-						// this.$imgs.push({
-						// 	img: v,
-						// 	position: v.getBoundingClientRect().top
-						// })
-
 						return {
 							item: v,
-							//img: v.querySelector(".avatar"),
 							position: v.getBoundingClientRect().top
 						}
 					})
@@ -255,15 +226,9 @@
 					let height = item.item.getBoundingClientRect().height
 
 					if (top >= 0 && top <= window.innerHeight + height) {
-						//console.log(this.$itemss)
-
 						this.itemss.push(item.item.dataset.id)
 						item.item.removeAttribute("data-src")
 						item.item.removeAttribute("data-id")
-
-						// this.$nextTick(() => {
-						// 	item.img.style.backgroundImage = `url(${item.item.dataset.src})`
-						// })
 
 						return false
 					}
@@ -282,7 +247,6 @@
 				this.show = false
 
 				document.body.classList.remove("show")
-				//this.$dispatch("hideSlideNav")
 			},
 			loadMore() {
 				this.page++

@@ -1,7 +1,7 @@
 <style src="../css/message.css"></style>
 
 <template>
-	<header class="header topic-hd">
+	<header class="header">
 		<h2 class="title">消息</h2>
 	</header>
 	<router-view></router-view>

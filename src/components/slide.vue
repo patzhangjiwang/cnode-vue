@@ -40,34 +40,26 @@
 		},
 		created() {
 			//避免多次请求接口
-			this.$dispatch("isRequestMessageCount")
-		},
-		events: {
-			sureRequestMessageCount(status) {
-				! status && this.getMessageCount()
+			if (this.$root.requestMessage) {
+				return
 			}
+
+			this.user.token && this.getMessageCount()
+
+			this.$root.requestMessage = true
 		},
 		methods: {
 			goLogin() {
-				//this.slide = false
-				//this.show = false
-				//this.$emit("hideSlideNav")
 				this.$dispatch("hideSlideNav")
 
 				this.$route.router.go("/login")
 			},
 			switchTag(index) {
-				//this.show = false
-
-				//this.loading = true
-
-				//document.body.classList.remove("show")
-
 				this.$dispatch("hideSlideNav")
+
 				this.$dispatch("switchTag", index)
 			},
 			goOther(index) {
-				//this.slide = false
 				this.$dispatch("hideSlideNav")
 
 				this.$route.router.go(this.other[index])

@@ -22,7 +22,7 @@
 
 <script>
 	import {getMessages} from "../api"
-	import filters from "../filters"
+	import {timeFormat} from "../filters"
 	import loading from "./loading.vue"
 
 	export default {
@@ -38,13 +38,13 @@
 			loading
 		},
 		route: {
-			data(transition) {
+			data() {
 				this.getMessages()
 			}
 		},
 		filters: {
 			timeFormat(value) {
-				return filters.timeFormat(value)
+				return timeFormat(value)
 			}
 		},
 		methods: {

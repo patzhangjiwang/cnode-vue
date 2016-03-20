@@ -32,7 +32,7 @@
 
 <script>
 	import {post} from "../api"
-	import filter from "../filters"
+	import {ISOTimeFormat} from "../filters"
 
 	export default {
 		data() {
@@ -119,7 +119,7 @@
 						avatar_url: this.user.avatar_url
 					},
 					content: '<div class="markdown-text"></div>',
-					create_at: filter.ISOTimeFormat(Date.now()),
+					create_at: ISOTimeFormat(Date.now()),
 					good: false,
 					id: "",
 					reply_count: 0,

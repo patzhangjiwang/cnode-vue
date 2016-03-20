@@ -1,16 +1,14 @@
 <style src="../css/login.css"></style>
 
 <template>
-	<!-- <div> -->
-		<header class="header topic-hd">
-			<h2 class="title">登录</h2>
-		</header>
-		<div class="login-box">
-			<input type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
-			<a class="login-btn" href="javascript:;" v-touch="loginValidate">登录</a>
-		</div>
-		<tips :message="errorMessage"></tips>
-	<!-- </div> -->
+	<header class="header topic-hd">
+		<h2 class="title">登录</h2>
+	</header>
+	<div class="login-box">
+		<input type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
+		<a class="login-btn" href="javascript:;" v-touch="loginValidate">登录</a>
+	</div>
+	<tips :message.sync="message"></tips>
 </template>
 
 <script>
@@ -21,7 +19,7 @@
 		data() {
 			return {
 				token: "",
-				errorMessage: ""
+				message: ""
 			}
 		},
 		route: {
@@ -33,9 +31,6 @@
 		},
 		components: {
 			tips
-		},
-		created() {
-			this.$dispatch("loaded")
 		},
 		methods: {
 			loginValidate() {
@@ -56,11 +51,7 @@
 					// 自定义小尾巴
 					data.tail = "来自花见花开 人见人爱的南风~~"
 
-					path === "/profile/" && (path = path + data.loginname)
-
 					localStorage.setItem("user", JSON.stringify(data))
-
-					this.$dispatch("login", data)
 
 					this.$route.router.go(path)
 
@@ -68,11 +59,7 @@
 				}
 
 				if (! data.success) {
-					this.errorMessage = data.error_msg
-
-					setTimeout(() => {
-						this.errorMessage = ""
-					}, 2000)
+					this.message = data.error_msg
 				}
 			}
 		},

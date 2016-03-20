@@ -6,11 +6,7 @@
 			<i class="back-btn"></i>
 		</a>
 		<h2 class="title">帖子正文</h2>
-		<!-- <div class="login-btn"></div> -->
 	</header>
-	<!-- <div class="loading-wrap topic-loading" v-if="loading">
-		<div class="loading">正在加载 客官骚等哈~~</div>
-	</div> -->
 	<div class="topic-container" v-if="! loading">
 		<div class="topic-content">
 			<div class="topic-header">
@@ -74,7 +70,6 @@
 					<span class="reply-edit-btn" v-touch="toReply">评论</span>
 				</div>
 			</div>
-			<!-- <div class="reply-more" @click="loadMoreReply">显示更多评论</div> -->
 		</div>
 	</div>
 	<loading :loading="loading"></loading>
@@ -83,17 +78,14 @@
 
 <script>
 	import {getTopic, like, reply} from "../api"
-	import filters from "../filters"
+	import {timeFormat, ISOTimeFormat} from "../filters"
 	import modal from "../components/modal.vue"
-	//import Vue from "vue"
 	import loading from "../components/loading.vue"
 
 	export default {
-		//props: ["user"],
 		data() {
 			return {
 				loading: true,
-				show: false,
 				topic: {
 					author: {
 						loginname: "",
@@ -103,21 +95,8 @@
 				},
 				user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
 				replyContent: "",
-				//replyContentFt: "",
 				showLoginModal: false,
 				replyState: false
-			}
-		},
-		route: {
-			activate(transition) {
-				// 隐藏导航栏
-				this.$dispatch("hideNav")
-
-				transition.next()
-			},
-			deactivate() {
-				// 显示导航栏
-				this.$dispatch("showNav")
 			}
 		},
 		components: {
@@ -125,8 +104,6 @@
 			loading
 		},
 		created() {
-			this.$dispatch("loading")
-
 			this.getTopic()
 		},
 		computed: {
@@ -134,7 +111,7 @@
 				return !! localStorage.getItem("user")
 			},
 			avatar() {
-				return this.user.avatar_url //JSON.parse(localStorage.getItem("user")).avatar_url
+				return this.user.avatar_url
 			}
 		},
 		filters: {
@@ -142,16 +119,7 @@
 				return `${value}条评论`
 			},
 			timeFormat(value) {
-				return filters.timeFormat(value)
-
-			}
-		},
-		events: {
-			showSlideNav() {
-				this.show = true
-			},
-			hideSlideNav() {
-				this.show = false
+				return timeFormat(value)
 			}
 		},
 		methods: {
@@ -161,25 +129,19 @@
 				this.topic = data.data
 
 				this.loading = false
-
-				// this.$nextTick(() => {
-				// 	this.loading = false
-				// })
-
-				this.$dispatch("loaded")
 			},
 			async like(id, item) {
-				let token = JSON.parse(localStorage.getItem("user")).token
+				let token = this.user.token
 				let data = await like(id, token)
 
 				if (data.success && data.action === "up") {
-					item.ups.push(JSON.parse(localStorage.getItem("user")).id)
+					item.ups.push(this.user.id)
 
 					return
 				}
 
 				if (data.success && data.action === "down") {
-					item.ups.$remove(JSON.parse(localStorage.getItem("user")).id)
+					item.ups.$remove(this.user.id)
 
 					return
 				}
@@ -214,7 +176,7 @@
 						loginname: this.user.loginname,
 						avatar_url: this.user.avatar_url
 					},
-					create_at: filters.ISOTimeFormat(+ new Date),
+					create_at: ISOTimeFormat(+ new Date),
 					content: `<div class="markdown-text">${content}</div>`,
 					ups: []
 				})

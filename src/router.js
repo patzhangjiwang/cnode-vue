@@ -14,7 +14,6 @@ Vue.use(VueRouter)
 
 var router = new VueRouter({
 	history: true,
-	saveScrollPosition: true
 })
 
 // router.map({
