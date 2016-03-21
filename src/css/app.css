@@ -1,3 +1,6 @@
+/* @import "./home.css";
+@import "./login.css"; */
+
 p, ul, li, div, h1, h2, h4, h5, body {
 	padding: 0;
 	margin: 0;
@@ -6,7 +9,6 @@ p, ul, li, div, h1, h2, h4, h5, body {
 body {
 	font-size: 0.25rem;
 	font-family: STHeiti,"Microsoft YaHei", Helvetica, Arial, sans-serif;
-	/* background-color: #F2F2F2; */
 }
 body.show {
 	overflow-y: hidden;
@@ -58,7 +60,7 @@ h1, h2, h4, h5 {
 	overflow-x: hidden;
 }
 
-.header {
+/* .header {
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
@@ -69,7 +71,7 @@ h1, h2, h4, h5 {
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 	background-color: #FFF;
 	transition: all 0.3s;
-}
+} */
 .header.show {
 	transform: translateX(3.88rem);
 }
@@ -123,83 +125,7 @@ h1, h2, h4, h5 {
 	opacity: 0;
 }
 
-.slide-nav-wrap {
-	display: flex;
-	width: 3.88rem;
-	/* height: 100%; */
-	height: 736px;
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	z-index: 6;
-	left: -3.88rem;
-	background: url(../images/bg.png) center;
-	transition: left 0.3s;
-}
-.slide-nav-wrap.show {
-	left: 0;
-}
-.slide-nav {
-	width: 100%;
-	padding-left: 0.4rem;
-	margin: auto;
-	color: #FFF;
-	font-size: 0.3rem;
-}
-.user {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 0.3rem;
-	margin-bottom: 0.3rem;
-	border-bottom: 1px solid #626262;
-}
-.user-avatar-no {
-	display: inline-block;
-	width: 0.9rem;
-	height: 0.9rem;
-	margin-right: 0.2rem;
-	text-align: center;
-	line-height: 0.9rem;
-	vertical-align: middle;
-	border-radius: 100%;
-	background-color: #F8F8F8;
-}
-.user-avatar-no::after {
-	content: "\f0182";
-	color: #333;
-	font-size: 0.5rem;
-	font-family: "iconfont";
-}
-.user span:nth-child(2) {
-	flex: 1;
-}
-.user img {
-	width: 0.9rem;
-	height: 0.9rem;
-	margin-right: 0.2rem;
-	border-radius: 100%;
-}
-.tag-list {
-	padding-bottom: 0.3rem;
-	margin-bottom: 0.3rem;
-	border-bottom: 1px solid #626262;
-}
-.slide-nav li {
-	line-height: 0.7rem;
-}
-.other-list span {
-	display: block;
-}
-.other-list li:nth-of-type(2) span {
-	position: relative;
-}
-.other-list li:nth-of-type(2) span::after {
-	content: attr(data-count);
-	position: absolute;
-	top: 0;
-	right: 0.2rem;
-}
+
 
 .nav {
 	display: flex;
@@ -257,7 +183,7 @@ h1, h2, h4, h5 {
 }
 
 .loading-wrap {
-	margin: 0.2rem 0;
+	padding: 0.2rem 0;
 	color: #333;
 	font-size: 0.24rem;
 	text-align: center;

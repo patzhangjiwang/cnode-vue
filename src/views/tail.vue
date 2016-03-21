@@ -1,12 +1,13 @@
-<style src="../css/login.css"></style>
-
 <template>
 	<header class="header topic-hd">
+		<a class="back-btn-wrap" v-link="{path: '/'}">
+			<i class="back-btn"></i>
+		</a>
 		<h2 class="title">设置尾巴</h2>
 	</header>
-	<div class="login-box">
-		<input type="text" placeholder="造个尾巴玩玩吧" required v-model="tail" v-focus="tail" @keydown.enter="resetTail">
-		<a class="login-btn" href="javascript:;" v-touch="resetTail">保存</a>
+	<div class="box">
+		<input class="input-text" type="text" placeholder="造个尾巴玩玩吧" required v-model="tail" v-focus="tail" @keydown.enter="resetTail">
+		<a class="btn save-btn" href="javascript:;" v-touch="resetTail">保存</a>
 	</div>
 	<tips :message.sync="message"></tips>
 </template>

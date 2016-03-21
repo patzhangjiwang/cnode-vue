@@ -1,7 +1,7 @@
 <style src="../css/topic.css"></style>
 
 <template>
-	<header class="header topic-hd">
+	<header class="header">
 		<a class="back-btn-wrap" v-link="{path: '/'}">
 			<i class="back-btn"></i>
 		</a>

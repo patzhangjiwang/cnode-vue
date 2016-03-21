@@ -1,7 +1,5 @@
-<style src="../css/home.css"></style>
-
 <template>
-	<header class="header" :class="{show: show}">
+	<header class="header header-flex" :class="{show: show}">
 		<div class="side-btn-wrap" v-touch="showSlideNav">
 			<div class="side-btn"></div>
 		</div>

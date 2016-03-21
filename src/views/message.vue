@@ -2,6 +2,9 @@
 
 <template>
 	<header class="header">
+		<a class="back-btn-wrap" v-link="{path: '/'}">
+			<i class="back-btn"></i>
+		</a>
 		<h2 class="title">消息</h2>
 	</header>
 	<router-view></router-view>

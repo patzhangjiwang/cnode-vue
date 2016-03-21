@@ -1,12 +1,13 @@
-<style src="../css/login.css"></style>
-
 <template>
-	<header class="header topic-hd">
+	<header class="header">
+		<a class="back-btn-wrap" v-link="{path: '/'}">
+			<i class="back-btn"></i>
+		</a>
 		<h2 class="title">登录</h2>
 	</header>
-	<div class="login-box">
-		<input type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
-		<a class="login-btn" href="javascript:;" v-touch="loginValidate">登录</a>
+	<div class="box">
+		<input class="input-text" type="text" placeholder="Access Token" required v-model="token" v-focus="token" @keydown.enter="loginValidate">
+		<a class="btn save-btn" href="javascript:;" v-touch="loginValidate">登录</a>
 	</div>
 	<tips :message.sync="message"></tips>
 </template>

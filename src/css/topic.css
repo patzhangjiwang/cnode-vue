@@ -1,47 +1,30 @@
-.back-btn-wrap {
-	display: flex;
-	width: 0.7rem;
-	height: 0.7rem;
-	position: absolute;
-}
-
-.back-btn {
-	width: 0.24rem;
-	height: 0.24rem;
-	margin: auto;
-	border-bottom: 1px solid #333;
-	border-left: 1px solid #333;
-	transform: rotate(45deg);
-}
-
-.topic-loading {
-	margin-top: 1rem;
-}
-
 .topic-container {
 	padding-top: 0.9rem;
 }
 
 .topic-content {
-	padding: 0 0.25rem;
+	padding: 0 0.2rem;
 }
 .topic-title {
 	color: #414243;
-	font-size: 0.42rem;
+	font-size: 0.4rem;
 	font-weight: 400;
 }
-.topic-header p {
-	margin-top: 0.2rem;
-	color: #9D9E9F;
-	font-size: 0.24rem;
-}
-.topic-header img {
-	display: inline-block;
-	width: 0.5rem;
-	height: 0.5rem;
-	margin-right: 0.2rem;
-	vertical-align: middle;
-	border-radius: 100%;
+.topic-header {
+	& p {
+		margin-top: 0.2rem;
+		color: #9D9E9F;
+		font-size: 0.24rem;
+	}
+
+	& img {
+		display: inline-block;
+		width: 0.5rem;
+		height: 0.5rem;
+		margin-right: 0.2rem;
+		vertical-align: middle;
+		border-radius: 100%;
+	}
 }
 
 .markdown-text {
