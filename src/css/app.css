@@ -46,6 +46,10 @@ h1, h2, h4, h5 {
 .selected {
 	color: #FF8200;
 }
+::selection {
+	color: #22C37B;
+	background-color: #FFF;
+}
 
 #app {
 	width: 6.4rem;
@@ -298,7 +302,7 @@ h1, h2, h4, h5 {
 }
 
 .no-data {
-	width: 100%;
+	width: 6.4rem;
 	position: fixed;
 	top: 50%;
 	color: #929292;

@@ -2,7 +2,7 @@
 
 <template>
 	<header class="header">
-		<a class="back-btn-wrap" v-link="{path: '/'}">
+		<a class="back-btn-wrap" href="javascript:history.go(-1)">
 			<i class="back-btn"></i>
 		</a>
 		<h2 class="title">消息</h2>

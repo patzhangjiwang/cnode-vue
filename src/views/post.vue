@@ -24,7 +24,7 @@
 	</div>
 	<div class="select-tag" transition="select" v-if="show">
 		<ul>
-			<li :data-tag="tag" v-for="tag in tags" v-text="tag" v-touch:tag="hideTag"></li>
+			<li v-for="tag in tags" v-text="tag" v-touch="hideTag(tag)"></li>
 		</ul>
 	</div>
 

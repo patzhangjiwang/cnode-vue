@@ -31,7 +31,7 @@
 					},
 					{
 						title: "当前进度",
-						content: "90%"
+						content: "已完成"
 					},
 				]
 			}
