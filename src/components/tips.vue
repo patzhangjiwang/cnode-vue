@@ -1,5 +1,7 @@
 <template>
-	<div class="tips" v-text="message" transition="tips" v-if="message"></div>
+	<div class="tips-wrap" transition="tips" v-if="message">
+		<div class="tips" v-text="message"></div>
+	</div>
 </template>
 
 <script>
@@ -7,7 +9,9 @@
 		props: ["message"],
 		watch: {
 			message() {
-				setTimeout(() => {
+				clearTimeout(this.timer)
+
+				this.timer = setTimeout(() => {
 					this.message = ""
 				}, 2000)
 			}

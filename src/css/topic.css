@@ -31,44 +31,53 @@
 	color: #414243;
 	font-size: 0.25rem;
 	line-height: 0.42rem;
-}
-.markdown-text p {
-	word-break: break-word;
-}
-.markdown-text p, .markdown-text h1, .markdown-text h2 {
-	margin: 0.3rem 0;
-}
-.markdown-text h1, .markdown-text h2 {
-	font-size: 0.38rem;
-	font-weight: 400;
-}
-.markdown-text ul {
-	padding-left: 0.34rem;
-	margin: 0.3rem 0;
-}
-.markdown-text li {
-	margin-top: 0.16rem;
-	list-style: disc;
-}
-.markdown-text a {
-	color: #225D99;
-	word-break: break-word;
-}
-.markdown-text img {
-	width: 100%;
-	margin: 0.3rem auto 0.46rem;
-}
-.markdown-text blockquote {
-	padding-left: 0.3rem;
-	margin: 0.3rem 0;
-	border-left: 4px solid #E2E3E4;
-}
-.markdown-text .prettyprint {
-	max-width: 5rem;
-	padding: 0.1rem 0.14rem;
-	margin: 0.24rem 0;
-	background-color: #F8F8F8;
-	-webkit-overflow-scrolling: touch;
+
+	& a {
+		color: #225D99;
+		word-break: break-word;
+	}
+
+	& img {
+		width: 100%;
+		margin: 0.3rem auto 0.46rem;
+	}
+
+	& blockquote {
+		padding-left: 0.3rem;
+		margin: 0.3rem 0;
+		border-left: 4px solid #E2E3E4;
+	}
+
+	& p {
+		word-break: break-word;
+	}
+
+	& h1, & h2 {
+		font-size: 0.38rem;
+		font-weight: 400;
+	}
+
+	& p, & h1, & h2 {
+		margin: 0.3rem 0;
+	}
+
+	& ul {
+		padding-left: 0.34rem;
+		margin: 0.3rem 0;
+	}
+
+	& li {
+		margin-top: 0.16rem;
+		list-style: disc;
+	}
+
+	& .prettyprint {
+		max-width: 5rem;
+		padding: 0.1rem 0.14rem;
+		margin: 0.24rem 0;
+		background-color: #F8F8F8;
+		-webkit-overflow-scrolling: touch;
+	}
 }
 
 .reply-count {
@@ -82,21 +91,27 @@
 	justify-content: space-between;
 	padding: 0.23rem 0.26rem 0.08rem;
 	border-bottom: 1px solid #F1F2F3;
+
+	& p {
+		margin: 0.15rem 0;
+	}
+
+	& .avatar {
+		width: 0.62rem;
+		height: 0.62rem;
+		margin-right: 0.3rem;
+	}
+
+	& .reply-content {
+		color: #414243;
+	}
 }
 .reply-item > div:nth-child(2) {
 	flex: 1;
 }
-.reply-item .avatar {
-	width: 0.62rem;
-	height: 0.62rem;
-	margin-right: 0.3rem;
-}
 .reply-name {
 	color: #225D99;
 	font-size: 0.25rem;
-}
-.reply-item .reply-content {
-	color: #414243;
 }
 .reply-ft {
 	position: relative;
@@ -146,16 +161,11 @@
 	margin-left: 0.2rem;
 }
 
-.reply-item p {
-	margin: 0.15rem 0;
-}
 .reply-item .prettyprint {
-	/* max-width: 100%; */
 	box-sizing: border-box;
 }
 
 .reply-more {
-	/*margin-top: 0.42rem;*/
 	color: #9D9E9F;
 	text-align: center;
 	font-size: 0.25rem;

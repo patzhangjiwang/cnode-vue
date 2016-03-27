@@ -34,8 +34,8 @@
 							<span v-text="item.create_at | timeFormat"></span>
 							<template v-if="loginState">
 								<template v-if="item.author.loginname !== user.loginname">
-									<span class="reply-btn" @click="subReply(item)">回复</span>
-									<span class="like" @click="like(item.id, item)" v-text="item.ups.includes('5617694c2fb53d5b4f2329bd') ? '取消赞' : '赞'"></span>
+									<span class="reply-btn" v-touch="subReply(item)">回复</span>
+									<span class="like" v-touch="like(item.id, item)" v-text="item.ups.includes('5617694c2fb53d5b4f2329bd') ? '取消赞' : '赞'"></span>
 									<span class="like-count" v-text="item.ups.length + ' 赞'"></span>
 								</template>
 								<template v-else>
@@ -52,8 +52,8 @@
 									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="item.replyContent" @keydown.enter="toSubReply(item)">
 								</div>
 								<div class="reply-edit-btn-wrap">
-									<span class="reply-edit-btn" @click="item.replyState = false">取消</span>
-									<span class="reply-edit-btn" @click="toSubReply(item)">评论</span>
+									<span class="reply-edit-btn" v-touch="item.replyState = false">取消</span>
+									<span class="reply-edit-btn" v-touch="toSubReply(item)">评论</span>
 								</div>
 							</div>
 						</p>
@@ -63,10 +63,10 @@
 			<div class="reply-box reply-box-ft" v-if="loginState">
 				<div class="reply-edit-content-wrap">
 					<img :src="user.avatar_url">
-					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent" @click="replyState = true" @keydown.enter="toReply">
+					<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="replyContent" v-touch="replyState = true" @keydown.enter="toReply">
 				</div>
 				<div class="reply-edit-btn-wrap" v-if="replyState">
-					<span class="reply-edit-btn" @click="replyState = false">取消</span>
+					<span class="reply-edit-btn" v-touch="replyState = false">取消</span>
 					<span class="reply-edit-btn" v-touch="toReply">评论</span>
 				</div>
 			</div>

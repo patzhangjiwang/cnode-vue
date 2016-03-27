@@ -12,12 +12,12 @@
 				</template>
 			</div>
 			<ul class="tag-list">
-				<li :data-index="$index" v-for="tag in tags" v-text="tag" v-touch:index="switchTag"></li>
+				<li v-for="tag in tags" v-text="tag" v-touch="switchTag($index)"></li>
 			</ul>
 			<ul class="other-list">
 				<li v-for="item in items">
-					<span :data-index="$index" v-text="item" v-touch:index="goOther" v-if="$index !== 1"></span>
-					<span :data-index="$index" v-text="item" v-touch:index="goOther" :data-count="count" v-if="$index === 1"></span>
+					<span v-text="item" v-touch="goOther($index)" v-if="$index !== 1"></span>
+					<span v-text="item" v-touch="goOther($index)" :data-count="count" v-if="$index === 1"></span>
 				</li>
 			</ul>
 		</div>

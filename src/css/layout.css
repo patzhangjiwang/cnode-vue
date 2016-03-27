@@ -4,7 +4,7 @@
 }
 
 @define-mixin header-layout {
-	width: 100%;
+	width: 6.4rem;
 	position: fixed;
 	top: 0;
 	z-index: 5;

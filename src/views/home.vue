@@ -6,6 +6,7 @@
 		<h1 class="title" v-text="tagText"></h1>
 		<a class="post-btn" v-link="{path: '/post'}">发表</a>
 	</header>
+	<slide :show.sync="show"></slide>
 	<div class="container" :class="{show: show}">
 		<ul>
 			<li class="item" v-for="item in list" :data-src="item.author.avatar_url" :data-id="item.id">
@@ -56,7 +57,6 @@
 			<div class="loading-text">(´・ω・｀)正在加载...</div>
 		</div>
 	</div>
-	<slide :show.sync="show"></slide>
 	<loading :loading="loading"></loading>
 	<div class="mask" v-if="show" v-touch="hideSlideNav"></div>
 	<div class="back-top" v-touch="backTop" v-if="scrollTop">
@@ -181,6 +181,7 @@
 				this.tag = this.tags[index].tag
 				this.tagText = this.tags[index].text
 
+				this.loading = true
 				this.page = 1
 				this.list = []
 

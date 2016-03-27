@@ -33,7 +33,7 @@
 
 .container {
 	padding-top: 0.9rem;
-	transition: all 0.3s;
+	transition: all 0.3s ease;
 	background-color: #F2F2F2;
 
 	&.show {
@@ -49,7 +49,7 @@
 
 .item-user-bar {
 	@extend flex;
-	align-items: center;
+	align-items: flex-start;
 	padding: 0 0.2rem;
 	@extend margin-bottom;
 }
@@ -87,6 +87,7 @@
 	border: 1px solid #1ABC9C;
 }
 .item-time {
+	margin-top: 0.1rem;
 	color: #999;
 	font-size: 0.2rem;
 }
@@ -113,7 +114,7 @@
 		flex: 1;
 		position: relative;
 
-		& ::after {
+		&::after {
 			content: "";
 			width: 1px;
 			height: 70%;
@@ -126,8 +127,12 @@
 	}
 
 	& .iconfont {
+		font-size: 0.24rem;
 		vertical-align: middle;
 	}
+}
+.item-btn-wrap .btn:last-child::after {
+	display: none;
 }
 
 .reply-btn a {
@@ -145,10 +150,10 @@
 	z-index: 6;
 	left: -3.88rem;
 	background: url(../images/bg.png) center;
-	transition: all 0.3s;
+	transition: all 0.3s ease;
 
 	&.show {
-		left: 0;
+		transform: translateX(3.88rem);
 	}
 }
 .slide-nav {
