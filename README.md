@@ -5,6 +5,9 @@
 ## Build Setup
 
 ``` bash
+# clone repo
+git clone git@github.com:ihanyang/cnode-vue.git
+
 # install dependencies
 npm install
 
