@@ -1,10 +1,6 @@
 export default {
-	//isFn: true,
 	acceptStatement: true,
-	update(value) {
-		//console.log(value)
-		//console.log(typeof value)
-		//console.log(this.expression)
+	update(method) {
 		let time, startX, startY, endX, endY
 
 		let flags = /iPhone|Android/gi
@@ -12,8 +8,6 @@ export default {
 
 		if (! mobile) {
 			this.el.addEventListener("click", value, false)
-			//console.log(11111)
-
 			return
 		}
 
@@ -29,14 +23,11 @@ export default {
 			endY = e.changedTouches[0].clientY
 
 			if (Date.now() - time < 200 && Math.abs(endX - startX) < 6 && Math.abs(endY - startY) < 6) {
-				//console.log(this.expression)
-				value()
-				//this.arg ? this.vm[this.expression](this.el.dataset[this.arg]) : this.vm[this.expression]()
-				//this.vm[this.expression]()
+				method()
 			}
 
 			// 阻止默认动作 防止误点
-			e.preventDefault()
+			this.el.nodeName.toLowerCase() !== "input" && e.preventDefault()
 		}, false)
 	}
 }
