@@ -14,3 +14,7 @@ npm install
 # build for production
 npm run build
 ```
+# Screenshots
+
+![screenshot](https://github.com/ihanyang/cnode-vue/blob/master/static/screenshot-1.png)
+![screenshot](https://github.com/ihanyang/cnode-vue/blob/master/static/screenshot-2.png)
