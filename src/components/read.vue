@@ -13,7 +13,9 @@
 			<div class="item-content">
 				<p class="item-content-title" v-html="item.reply.content"></p>
 			</div>
-			<div class="item-quote" v-text="item.topic.title"></div>
+			<div class="item-quote">
+				<a :href="'/topic/' + item.topic.id" v-text="item.topic.title"></a>
+			</div>
 		</li>
 	</ul>
 	<loading :loading="loading"></loading>
