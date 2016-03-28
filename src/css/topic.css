@@ -144,8 +144,9 @@
 }
 .reply-edit-content {
 	flex: 1;
-	padding: 0.1rem 0.2rem;
+	padding: 0 0.2rem;
 	font-size: 0.25rem;
+	line-height: 0.5rem;
 	outline: none;
 	border-radius: 4px;
 	border: 1px solid #DDD;

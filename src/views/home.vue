@@ -12,11 +12,11 @@
 			<li class="item" v-for="item in list" :data-src="item.author.avatar_url" :data-id="item.id">
 				<div class="item-user-bar">
 					<!-- <img class="avatar" src="../images/loading.png"> -->
-					<div class="avatar-cover" :class="{'avatar-loaded': itemss.includes(item.id)}" v-if="! item.lazy">
-						<div class="avatar" :style="{backgroundImage: 'url(' + item.author.avatar_url + ')'}" transition="avatar" v-if="itemss.includes(item.id)"></div>
+					<div class="avatar-cover" :class="{'avatar-loaded': itemss.indexOf(item.id) > -1}" v-if="! item.lazy">
+						<div class="avatar" :style="{backgroundImage: 'url(' + item.author.avatar_url + ')'}" transition="avatar" v-if="itemss.indexOf(item.id) > -1"></div>
 					</div>
-					<div class="avatar-cover" :class="{'avatar-loaded': itemss.includes(item.id)}" v-if="item.lazy">
-						<div class="avatar" :style="{backgroundImage: 'url(' + item.author.avatar_url + ')'}" v-if="itemss.includes(item.id)"></div>
+					<div class="avatar-cover" :class="{'avatar-loaded': itemss.indexOf(item.id) > -1}" v-if="item.lazy">
+						<div class="avatar" :style="{backgroundImage: 'url(' + item.author.avatar_url + ')'}" v-if="itemss.indexOf(item.id) > -1"></div>
 					</div>
 					<div class="item-detail">
 						<span class="username" v-text="item.author.loginname"></span>
@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	<loading :loading="loading"></loading>
-	<div class="mask" v-if="show" v-touch="hideSlideNav"></div>
+	<div class="mask" v-if="show" v-touch="hideSlideNav" @touchmove="touchmove"></div>
 	<div class="back-top" v-touch="backTop" v-if="scrollTop">
 		<i class="iconfont">&#xe758;</i>
 	</div>
@@ -246,6 +246,9 @@
 				this.show = false
 
 				document.body.classList.remove("show")
+			},
+			touchmove(e) {
+				e.preventDefault()
 			},
 			loadMore() {
 				this.page++
