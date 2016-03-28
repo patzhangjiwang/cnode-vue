@@ -1,6 +1,6 @@
 # cnode-vue
 
-> Vue版 cnodejs.org社区 WebApp [线上访问(暂时无法访问)](http://hanyang.coding.io/)
+> Vue版 cnodejs.org社区 WebApp [线上访问](http://hanyang.coding.io/)
 
 ## Build Setup
 
