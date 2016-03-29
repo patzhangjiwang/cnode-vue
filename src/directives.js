@@ -26,8 +26,7 @@ export default {
 				method()
 			}
 
-			// 阻止默认动作 防止误点
-			this.el.nodeName.toLowerCase() !== "input" && e.preventDefault()
+			this.el && this.el.nodeName.toLowerCase() !== "input" && e.preventDefault()
 		}, false)
 	}
 }
