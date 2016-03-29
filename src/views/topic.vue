@@ -49,7 +49,7 @@
 							<div class="reply-box" v-if="item.replyState">
 								<div class="reply-edit-content-wrap">
 									<img :src="avatar">
-									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-model="item.replyContent" @keydown.enter="toSubReply(item)">
+									<input type="text" class="reply-edit-content" placeholder="留下你的评论" v-focus="item.replyState" v-model="item.replyContent" @keydown.enter="toSubReply(item)">
 								</div>
 								<div class="reply-edit-btn-wrap">
 									<span class="reply-edit-btn" v-touch="item.replyState = false">取消</span>
@@ -120,6 +120,17 @@
 			},
 			timeFormat(value) {
 				return timeFormat(value)
+			}
+		},
+		directives: {
+			focus(value) {
+				if (! value) {
+					return
+				}
+
+				this.vm.$nextTick(() => {
+					this.el.focus()
+				})
 			}
 		},
 		methods: {

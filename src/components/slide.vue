@@ -1,10 +1,10 @@
 <template>
 	<section class="slide-nav-wrap" :class="{'show': show}">
 		<div class="slide-nav">
-			<div class="user">
+			<div class="user" v-touch="goLogin">
 				<template v-if="! user.loginname">
 					<span class="user-avatar-no"></span>
-					<span v-touch="goLogin">登录</span>
+					<span>登录</span>
 				</template>
 				<template v-if="user.loginname">
 					<img :src="user.avatar_url">
