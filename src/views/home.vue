@@ -9,7 +9,7 @@
 	<slide :show.sync="show"></slide>
 	<div class="container" :class="{show: show}">
 		<ul>
-			<li class="item" v-for="item in list" :data-src="item.author.avatar_url" :data-id="item.id">
+			<li class="item" v-for="item in list" :data-url="item.author.avatar_url" :data-id="item.id">
 				<div class="item-user-bar">
 					<!-- <img class="avatar" src="../images/loading.png"> -->
 					<div class="avatar-cover" :class="{'avatar-loaded': itemss.indexOf(item.id) > -1}" v-if="! item.lazy">
@@ -212,6 +212,7 @@
 					this.$items = Array.from(document.querySelectorAll(".item"), (v) => {
 						return {
 							item: v,
+							url: v.dataset.url,
 							position: v.getBoundingClientRect().top
 						}
 					})
@@ -225,9 +226,19 @@
 					let height = item.item.getBoundingClientRect().height
 
 					if (top >= 0 && top <= window.innerHeight + height) {
-						this.itemss.push(item.item.dataset.id)
-						item.item.removeAttribute("data-src")
-						item.item.removeAttribute("data-id")
+						let img = new Image()
+
+						img.src = item.url
+
+						img.onload = () => {
+							this.itemss.push(item.item.dataset.id)
+							item.item.removeAttribute("data-src")
+							item.item.removeAttribute("data-id")
+
+							img.onload = null
+						}
+
+
 
 						return false
 					}

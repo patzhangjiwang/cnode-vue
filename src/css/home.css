@@ -66,7 +66,7 @@
 	@extend avatar;
 }
 .avatar-transition {
-	transition: all 0.3s;
+	transition: all .3s;
 }
 .avatar-enter {
 	opacity: 0;
