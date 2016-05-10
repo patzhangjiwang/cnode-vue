@@ -7,7 +7,7 @@ export default {
 		let mobile = navigator.userAgent.match(flags)
 
 		if (! mobile) {
-			this.el.addEventListener("click", value, false)
+			this.el.addEventListener("click", method, false)
 			return
 		}
 
