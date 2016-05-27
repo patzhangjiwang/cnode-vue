@@ -1,6 +1,6 @@
 <template>
 	<div :class="{show: show}">
-		<router-view></router-view>
+		<router-view keep-alive></router-view>
 		<tips :message.sync="message"></tips>
 	</div>
 </template>

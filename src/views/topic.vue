@@ -103,8 +103,19 @@
 			modal,
 			loading
 		},
-		created() {
-			this.getTopic()
+		route: {
+			data() {
+				this.topic = {
+					author: {
+						loginname: "",
+						avatar_url: ""
+					},
+					replies: []
+				}
+
+				this.loading = true
+				this.getTopic()
+			}
 		},
 		computed: {
 			loginState() {

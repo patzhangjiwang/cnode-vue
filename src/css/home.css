@@ -32,7 +32,7 @@
 }
 
 .container {
-	padding-top: 0.9rem;
+	padding-top: 0.7rem;
 	transition: all 0.3s ease;
 	background-color: #F2F2F2;
 
@@ -43,7 +43,7 @@
 
 .item {
 	padding-top: 0.3rem;
-	@extend margin-bottom;
+	margin-top: .2rem;
 	background-color: #FFF;
 }
 
@@ -58,6 +58,7 @@
 	@extend avatar;
 	margin-right: 0.3rem;
 	background: url(../images/loading.png) no-repeat center;
+	background-size: .4rem;
 }
 .avatar-loaded {
 	background: none;

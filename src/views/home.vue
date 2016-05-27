@@ -110,32 +110,34 @@
 		route: {
 			data(transition) {
 				// 判断是否是从其它路径进来
-				if (transition.from.path) {
-					let data = JSON.parse(localStorage.getItem("list"))
+				// if (transition.from.path) {
+				// 	let data = JSON.parse(localStorage.getItem("list"))
 
-					this.list = data.map((item) => {
-						item.lazy = true
+				// 	this.list = data.map((item) => {
+				// 		item.lazy = true
 
-						return item
-					})
+				// 		return item
+				// 	})
 
-					this.itemss = JSON.parse(localStorage.getItem("itemss"))
+				// 	this.itemss = JSON.parse(localStorage.getItem("itemss"))
 
 					this.$nextTick(() => {
-						this.loading = false
+						//this.loading = false
 
 						document.body.scrollTop = + localStorage.getItem("scrollTop")
 						localStorage.removeItem("scrollTop")
 
-						this.forLazy()
+						//this.forLazy()
 					})
 
-					this.page = this.$root.page
+				// 	this.page = this.$root.page
 
-					return
-				}
+				// 	return
+				// }
 
-				this.getList()
+				// this.getList()
+
+				window.addEventListener("scroll", this.scroll, false)
 			},
 			deactivate() {
 				this.$root.page = this.page
@@ -205,7 +207,7 @@
 
 				this.forLazy()
 
-				localStorage.setItem("list", JSON.stringify(this.list))
+				//localStorage.setItem("list", JSON.stringify(this.list))
 			},
 			forLazy() {
 				this.$nextTick(() => {
@@ -268,7 +270,7 @@
 			},
 			scroll() {
 				this.$items.length && this.lazy()
-
+				
 				document.body.scrollTop >= 500 && (this.scrollTop = true)
 
 				document.body.scrollTop < 500 && (this.scrollTop = false)
@@ -288,7 +290,7 @@
 			}
 		},
 		ready() {
-			window.addEventListener("scroll", this.scroll, false)
+			this.getList()
 		}
 	}
 </script>
