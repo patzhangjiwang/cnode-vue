@@ -1,7 +1,7 @@
-var path = require("path")
-var precss = require("precss")
-var autoprefixer = require("autoprefixer")
-var ExtractTextPlugin = require("extract-text-webpack-plugin")
+import path from "path"
+import precss from "precss"
+import autoprefixer from "autoprefixer"
+import ExtractTextPlugin from "extract-text-webpack-plugin"
 
 module.exports = {
 	entry: "./src/app.js",
@@ -38,7 +38,7 @@ module.exports = {
 	postcss: [
 		precss,
 		autoprefixer({
-			browsers: "> 1%"
+			browsers: "> 5%"
 		})
 	],
 	plugins: [
